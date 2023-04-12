@@ -1,0 +1,7 @@
+.center-label {
+    -fx-alignment: center;
+}
+.my-image-view {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
