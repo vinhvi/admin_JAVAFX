@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ImportOrderController implements Initializable {
+
     public Button search_btn;
     public Button add_btn;
 
@@ -23,4 +24,7 @@ public class ImportOrderController implements Initializable {
     private void onAddOrder() {
         Model.getInstance().getViewFactory().getSelectMenuItem().set("CreateImportOrder");
     }
+
+
+
 }

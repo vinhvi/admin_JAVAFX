@@ -49,7 +49,16 @@
 }
 
 .logout{
-    -fx-background-color: #FF0000;
+    -fx-background-color: #FFFFFF;
     -fx-background-radius: 10   ;
 }
 
+.MENU_Button{
+
+    -fx-pref-width: 220;
+    -fx-pref-height: 40;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #132A13;
+    -fx-alignment: center_left;
+    -fx-effect: dropshadow(three-pass-box, #C0C0C0, 3, 0, 0, 10);
+}

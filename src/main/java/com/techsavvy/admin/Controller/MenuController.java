@@ -1,23 +1,39 @@
 package com.techsavvy.admin.Controller;
 
+import com.techsavvy.admin.Api.EmployeeApi;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.Models.Model;
+import com.techsavvy.admin.entity.Employee;
+import com.techsavvy.admin.entity.Role;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
+    private final LocalStorage localStorage = new LocalStorage();
+    private final EmployeeApi employeeApi = new EmployeeApi();
     public Button dashboard_btn;
     public Button listcustomer_btn;
     public Button listimportorder_btn;
     public Button listsupplier_btn;
     public Button saleorder_btn;
     public Button listproduct_btn;
+    public Button listemployee_btn;
+    public Label nameNV_txt;
+    public Label role_txt;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListeners();
+        try {
+            getInfor();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void addListeners() {
@@ -26,6 +42,21 @@ public class MenuController implements Initializable {
         listimportorder_btn.setOnAction(actionEvent -> onListImportOrder());
         saleorder_btn.setOnAction(actionEvent -> onListSaleOrder());
         listproduct_btn.setOnAction(actionEvent -> onListProduct());
+        listemployee_btn.setOnAction(actionEvent -> onListEmployee());
+        listsupplier_btn.setOnAction(actionEvent -> onListSupplier());
+    }
+
+    private void getInfor() throws IOException, ClassNotFoundException {
+        String maNV = localStorage.getEmployeeInLocal();
+        Employee employee = employeeApi.getById(maNV);
+        nameNV_txt.setText(employee.getFirstName()+" "+employee.getLastName());
+        for (Role role1:employee.getAccount().getRoles()) {
+            if (role1.getName().equals("ADMIN")){
+                role_txt.setText("Quản Lý Cửa Hàng");
+            }else {
+                role_txt.setText("Nhân Viên Bán Hàng");
+            }
+        }
     }
 
     private void onDashboard() {
@@ -46,5 +77,13 @@ public class MenuController implements Initializable {
 
     private void onListProduct() {
         Model.getInstance().getViewFactory().getSelectMenuItem().set("ListProduct");
+    }
+
+    private void onListEmployee() {
+        Model.getInstance().getViewFactory().getSelectMenuItem().set("ListEmployee");
+    }
+
+    private void onListSupplier() {
+        Model.getInstance().getViewFactory().getSelectMenuItem().set("ListSupplier");
     }
 }

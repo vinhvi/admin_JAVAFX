@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="900.0" prefWidth="251.0" styleClass="main_menu_container" stylesheets="@../Styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.MenuController">
-     <VBox prefHeight="600.0" prefWidth="200.0" styleClass="menu_container" stylesheets="@../Styles/menu.css">
+<VBox prefHeight="600.0" prefWidth="251.0" styleClass="main_menu_container" stylesheets="@../Styles/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.MenuController">
+     <VBox prefHeight="600.0" prefWidth="251.0" styleClass="menu_container" stylesheets="@../Styles/menu.css">
          <ImageView fitHeight="104.0" fitWidth="133.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
              <effect>
                  <Glow />
@@ -29,7 +29,7 @@
                  <Insets left="20.0" />
              </VBox.margin>
          </Label>
-         <Label id="nameNV" alignment="CENTER" prefHeight="34.0" prefWidth="172.0" text="Vi Thế Vinh">
+         <Label fx:id="nameNV_txt" alignment="CENTER" prefHeight="34.0" prefWidth="172.0" text="Vi Thế Vinh">
              <font>
                  <Font name="System Bold" size="13.0" />
              </font>
@@ -37,7 +37,7 @@
                  <Insets left="30.0" />
              </VBox.margin>
          </Label>
-         <Label alignment="CENTER" prefHeight="27.0" prefWidth="163.0" text="Nhân Viên bán hàng">
+         <Label fx:id="role_txt" alignment="CENTER" prefHeight="27.0" prefWidth="163.0" text="Nhân Viên bán hàng">
              <font>
                  <Font name="System Bold" size="13.0" />
              </font>
@@ -55,11 +55,19 @@
          </Button>
          <Button fx:id="listcustomer_btn" mnemonicParsing="false" prefHeight="41.0" prefWidth="209.0" text="Danh Sách Khách Hàng">
              <graphic>
-                 <FontAwesomeIconView glyphName="USERS" size="30" />
+                 <FontAwesomeIconView glyphName="USER" size="30" />
              </graphic>
              <font>
                  <Font name="System Bold" size="13.0" />
              </font>
+         </Button>
+         <Button fx:id="listemployee_btn" mnemonicParsing="false" text="Danh Sách Nhân Viên">
+             <font>
+                 <Font name="System Bold" size="13.0" />
+             </font>
+             <graphic>
+                 <FontAwesomeIconView glyphName="USERS" size="30" />
+             </graphic>
          </Button>
       <Button fx:id="listsupplier_btn" mnemonicParsing="false" prefHeight="41.0" prefWidth="209.0" text="Danh Sách Nhà Cung Cấp">
          <graphic>
@@ -69,7 +77,15 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-         <Button fx:id="listimportorder_btn" alignment="CENTER" mnemonicParsing="false" text="Hóa Đơn Nhập Hàng">
+         <Button fx:id="listproduct_btn" mnemonicParsing="false" text="Danh Sách Sản Phẩm">
+             <graphic>
+                 <FontAwesomeIconView glyphName="CUBES" size="30" />
+             </graphic>
+             <font>
+                 <Font name="System Bold" size="13.0" />
+             </font>
+         </Button>
+         <Button fx:id="listimportorder_btn" alignment="CENTER" mnemonicParsing="false" text="Phiếu Nhập Hàng">
              <graphic>
                  <FontAwesomeIconView glyphName="WPFORMS" size="30" text="" />
              </graphic>
@@ -85,22 +101,6 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-         <Button fx:id="listproduct_btn" mnemonicParsing="false" text="Danh Sách Sản Phẩm">
-             <graphic>
-                 <FontAwesomeIconView glyphName="CUBES" size="30" />
-             </graphic>
-             <font>
-                 <Font name="System Bold" size="13.0" />
-             </font>
-         </Button>
-         <Button mnemonicParsing="false" text="Thêm Sản Phẩm">
-             <font>
-                 <Font name="System Bold" size="13.0" />
-             </font>
-             <graphic>
-                 <FontAwesomeIconView glyphName="CART_PLUS" size="30" text="" />
-             </graphic>
-         </Button>
          <Button mnemonicParsing="false" text="Khuyến Mại">
              <graphic>
                  <FontAwesomeIconView glyphName="TAGS" size="30" text="" />
@@ -117,12 +117,12 @@
                  <Font name="System Bold" size="13.0" />
              </font>
          </Button>
-      <Button id="#logout" mnemonicParsing="false" styleClass="logout" text="Đăng Xuất" textFill="#eee8e8">
+      <Button id="#logout" mnemonicParsing="false" styleClass="logout" text="Cài Đặt" textFill="#eee8e8">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="#eeeaea" glyphName="SIGN_OUT" size="20" />
+            <FontAwesomeIconView fill="#2f2e2e" glyphName="WRENCH" selectionFill="#2f2e2e" size="20" />
          </graphic>
       </Button>
      </VBox>

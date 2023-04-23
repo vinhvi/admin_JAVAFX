@@ -20,6 +20,9 @@ public class ViewController implements Initializable {
                 case "SaleOrder" -> views.setCenter(Model.getInstance().getViewFactory().getSaleOrder());
                 case "CreateSaleOrder" -> views.setCenter(Model.getInstance().getViewFactory().getCreateSaleOrder());
                 case "ListProduct" -> views.setCenter(Model.getInstance().getViewFactory().getListProduct());
+                case "ListEmployee" -> views.setCenter(Model.getInstance().getViewFactory().getListEmployee());
+                case "ListSupplier" -> views.setCenter(Model.getInstance().getViewFactory().getListSupplier());
+                case "AddSupplier"->views.setCenter(Model.getInstance().getViewFactory().getAddSupplier());
                 default -> views.setCenter(Model.getInstance().getViewFactory().getDasAnchorView());
             }
         }));

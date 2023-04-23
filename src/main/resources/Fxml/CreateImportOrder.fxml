@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.AddImportOrderController">
+<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.AddImportOrderController">
    <VBox layoutX="2.0" layoutY="7.0" prefHeight="900.0" prefWidth="1240.0">
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="290.0" text="Hóa đơn nhập hàng">
          <font>
@@ -37,45 +37,50 @@
                <Font name="System Bold" size="14.0" />
             </font>
          </Button>
-         <TextField alignment="CENTER" layoutX="119.0" layoutY="88.0" prefHeight="39.0" prefWidth="210.0" promptText="Ngày nhập">
+         <TextField fx:id="importDate_txt" alignment="CENTER" layoutX="119.0" layoutY="88.0" prefHeight="39.0"
+                    prefWidth="210.0" promptText="Ngày nhập">
             <font>
-               <Font size="18.0" />
+               <Font size="18.0"/>
             </font>
          </TextField>
-         <TextField alignment="CENTER" layoutX="457.0" layoutY="88.0" prefHeight="39.0" prefWidth="223.0" promptText="Mã hóa đơn">
+         <TextField fx:id="idImportOrder_txt" alignment="CENTER" layoutX="457.0" layoutY="88.0" prefHeight="39.0"
+                    prefWidth="223.0" promptText="Mã hóa đơn">
             <font>
-               <Font size="18.0" />
+               <Font size="18.0"/>
             </font>
          </TextField>
-         <TableView layoutX="17.0" layoutY="250.0" prefHeight="579.0" prefWidth="785.0">
+         <TableView fx:id="table_list_product" layoutX="17.0" layoutY="250.0" prefHeight="579.0" prefWidth="785.0">
             <columns>
-               <TableColumn prefWidth="60.0" text="STT" />
-               <TableColumn prefWidth="122.0" text="Tên sản phẩm" />
-               <TableColumn prefWidth="85.0" text="Loại" />
-               <TableColumn prefWidth="84.0" text="Số lượng" />
-               <TableColumn prefWidth="104.0" text="Hãng" />
-               <TableColumn prefWidth="103.0" text="Lô số" />
-               <TableColumn prefWidth="113.0" text="Giá nhập" />
-               <TableColumn prefWidth="113.0" text="Tùy chọn" />
+               <TableColumn fx:id="column_STT" prefWidth="60.0" text="STT"/>
+               <TableColumn fx:id="column_nameSp" prefWidth="122.0" text="Tên sản phẩm"/>
+               <TableColumn fx:id="column_type" prefWidth="85.0" text="Loại"/>
+               <TableColumn fx:id="column_count" prefWidth="84.0" text="Số lượng"/>
+               <TableColumn fx:id="column_origin" prefWidth="104.0" text="Hãng"/>
+               <TableColumn fx:id="column_loHang" prefWidth="103.0" text="Lô số"/>
+               <TableColumn fx:id="column_priceImport" prefWidth="113.0" text="Giá nhập"/>
+               <TableColumn fx:id="column_options" prefWidth="113.0" text="Tùy chọn"/>
             </columns>
          </TableView>
          <Line endX="113.0" layoutX="1105.0" layoutY="18.0" startX="-285.0" startY="1.0" />
          <Line endX="-7.5" endY="711.0" layoutX="827.0" layoutY="117.0" startX="-7.5" startY="-97.5" />
          <Line endX="114.0" endY="-8.0" layoutX="1105.0" layoutY="836.0" startX="-285.0" startY="-8.0" />
          <Line endX="-6.5" endY="712.5" layoutX="1226.0" layoutY="115.0" startX="-7.5" startY="-97.5" />
-         <TextField alignment="CENTER" layoutX="831.0" layoutY="81.0" prefHeight="39.0" prefWidth="230.0" promptText="Tên nhà cung cấp">
+         <TextField fx:id="nameSupplier_txt" alignment="CENTER" layoutX="831.0" layoutY="81.0" prefHeight="39.0"
+                    prefWidth="230.0" promptText="Tên nhà cung cấp">
             <font>
-               <Font size="18.0" />
+               <Font size="18.0"/>
             </font>
          </TextField>
-         <TextField alignment="CENTER" layoutX="831.0" layoutY="140.0" prefHeight="39.0" prefWidth="230.0" promptText="Số điện thoại">
+         <TextField fx:id="phoneSupplier_txt" alignment="CENTER" layoutX="831.0" layoutY="140.0" prefHeight="39.0"
+                    prefWidth="230.0" promptText="Số điện thoại">
             <font>
-               <Font size="18.0" />
+               <Font size="18.0"/>
             </font>
          </TextField>
-         <TextField alignment="CENTER" layoutX="831.0" layoutY="194.0" prefHeight="39.0" prefWidth="376.0" promptText="Địa chỉ">
+         <TextField fx:id="address_txt" alignment="CENTER" layoutX="831.0" layoutY="194.0" prefHeight="39.0"
+                    prefWidth="376.0" promptText="Địa chỉ">
             <font>
-               <Font size="14.0" />
+               <Font size="14.0"/>
             </font>
          </TextField>
          <Button fx:id="infor_btn" layoutX="1077.0" layoutY="81.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Xem thông tin">
@@ -83,9 +88,10 @@
                <Font name="System Bold" size="12.0" />
             </font>
          </Button>
-         <Button layoutX="1077.0" layoutY="140.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" text="Kiểm tra">
+         <Button fx:id="check_btn" layoutX="1077.0" layoutY="140.0" mnemonicParsing="false" prefHeight="39.0"
+                 prefWidth="103.0" text="Kiểm tra">
             <font>
-               <Font name="System Bold" size="12.0" />
+               <Font name="System Bold" size="12.0"/>
             </font>
          </Button>
          <Label layoutX="831.0" layoutY="297.0" prefHeight="30.0" prefWidth="87.0" text="Thành Tiền :">
@@ -126,4 +132,4 @@
          <FontAwesomeIconView glyphName="UPLOAD" layoutX="400.0" layoutY="219.0" size="20" />
       </Pane>
    </VBox>
-</AnchorPane>
+</VBox>

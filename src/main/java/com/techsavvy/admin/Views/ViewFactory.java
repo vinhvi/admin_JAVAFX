@@ -11,19 +11,22 @@ import javafx.stage.Stage;
 
 public class ViewFactory {
     private final StringProperty selectMenuItem;
-    private AnchorPane dasAnchorView;
+    private VBox dasAnchorView;
     private AnchorPane listCustomer;
     private AnchorPane listImportOrder;
-    private AnchorPane createImportOrder;
+    private VBox createImportOrder;
     private AnchorPane saleOrder;
     private AnchorPane createSaleOrder;
     private VBox listProduct;
+    private VBox listEmployee;
+    private VBox listSupplier;
+    private VBox addSupplier;
 
     public ViewFactory() {
         this.selectMenuItem = new SimpleStringProperty("");
     }
 
-    public AnchorPane getDasAnchorView() {
+    public VBox getDasAnchorView() {
         if (dasAnchorView == null) {
             try {
                 dasAnchorView = new FXMLLoader(getClass().getResource("/Fxml/Dashboard.fxml")).load();
@@ -83,7 +86,7 @@ public class ViewFactory {
         return listImportOrder;
     }
 
-    public AnchorPane getAddImportOrder() {
+    public VBox getAddImportOrder() {
         if (createImportOrder == null) {
             try {
                 createImportOrder = new FXMLLoader(getClass().getResource("/Fxml/CreateImportOrder.fxml")).load();
@@ -125,6 +128,37 @@ public class ViewFactory {
             }
         }
         return listProduct;
+    }
+    public VBox getListEmployee() {
+        if (listEmployee == null) {
+            try {
+                listEmployee = new FXMLLoader(getClass().getResource("/Fxml/ListEmployee.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listEmployee;
+    }
+    public VBox getListSupplier() {
+        if (listSupplier == null) {
+            try {
+                listSupplier = new FXMLLoader(getClass().getResource("/Fxml/ListSupplier.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listSupplier;
+    }
+
+    public VBox getAddSupplier(){
+        if (addSupplier==null){
+            try {
+                addSupplier = new FXMLLoader(getClass().getResource("/Fxml/AddSupplier.fxml")).load();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return addSupplier;
     }
 
     public void closeStage(Stage stage) {
