@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListOptionsProductController">
+   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="293.0" text="Danh Sách Phiên Bản Của Sản Phẩm">
+      <font>
+         <Font name="System Bold" size="15.0" />
+      </font>
+      <VBox.margin>
+         <Insets left="330.0" top="10.0" />
+      </VBox.margin>
+   </Label>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </VBox.margin>
+      <Label prefHeight="30.0" prefWidth="105.0" text="Tên Phiên Bản: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" top="30.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="name_Options_txt" alignment="CENTER" prefHeight="30.0" promptText="Tên Phiên Bản">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets top="30.0" />
+         </HBox.margin>
+      </TextField>
+      <Label prefHeight="30.0" prefWidth="113.0" text="Màu Phiên Bản: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" top="30.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="color_Options_txt" alignment="CENTER" prefHeight="30.0" promptText="Màu Phiên Bản">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets top="30.0" />
+         </HBox.margin>
+      </TextField>
+      <Label prefHeight="30.0" prefWidth="81.0" text="Số Lượng: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" top="30.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="count_Options_txt" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Số Lượng">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets top="30.0" />
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </VBox.margin>
+      <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="107.0" text="Giá Nhập: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" top="30.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="priceImport_txt" alignment="CENTER" prefHeight="30.0" prefWidth="177.0" promptText="Giá Nhập">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets top="30.0" />
+         </HBox.margin>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="109.0" text="Giá Bán: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" top="30.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="priceSale_txt" alignment="CENTER" prefHeight="30.0" prefWidth="179.0" promptText="Giá Bán">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets top="30.0" />
+         </HBox.margin>
+      </TextField>
+      <Button fx:id="btn_edit" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" text="Sửa">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView glyphName="PENCIL_SQUARE" size="18" />
+         </graphic>
+         <HBox.margin>
+            <Insets left="60.0" top="30.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
+   <TableView fx:id="table_Options" prefHeight="353.0" prefWidth="900.0">
+      <columns>
+         <TableColumn fx:id="column_stt" prefWidth="75.0" text="STT" />
+         <TableColumn fx:id="column_name" prefWidth="214.0" text="Tên Phiên Bản" />
+         <TableColumn fx:id="column_color" prefWidth="151.0" text="Màu Sắc" />
+         <TableColumn fx:id="column_count" prefWidth="137.0" text="Số Lượng" />
+         <TableColumn fx:id="column_price_sale" prefWidth="160.0" text="Giá Nhập" />
+         <TableColumn fx:id="column_price_import" minWidth="0.0" prefWidth="142.0" text="Giá Bán" />
+      </columns>
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </VBox.margin>
+   </TableView>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <Button fx:id="btn_confirm" mnemonicParsing="false" prefHeight="30.0" prefWidth="329.0" text="Cập Nhật Tông Tin Các Phiên Bản">
+         <HBox.margin>
+            <Insets left="300.0" top="30.0" />
+         </HBox.margin>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#15ae43" glyphName="CHECK" size="18" />
+         </graphic>
+      </Button>
+      <Button fx:id="btn_cancel" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Hủy">
+         <HBox.margin>
+            <Insets left="50.0" top="30.0" />
+         </HBox.margin>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fill="#d31515" glyphName="TIMES_CIRCLE" size="18" />
+         </graphic>
+      </Button>
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </VBox.margin>
+   </HBox>
+</VBox>

@@ -23,37 +23,49 @@ public class LoginController implements Initializable {
     public TextField name_txt;
     public PasswordField password_txt;
 
+    public LoginController() throws IOException, ClassNotFoundException {
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         name_txt.setText("vinh@gmail.com");
         password_txt.setText("12345678");
 
+        onListener();
+    }
+
+    private void onListener() {
         btn_login.setOnAction(actionEvent -> {
             try {
                 onLogin();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
 
-
-    private void onLogin() throws IOException {
+    private void onLogin() throws IOException, ClassNotFoundException {
         Account account = getAccount();
         String token = api.login(account);
-        if (token!=null){
-            System.out.println(token);
+        if (token != null) {
             localStorage.saveToken(token);
+            System.out.println("save token: " + token);
             Employee employee = employeeApi.getByEmail(name_txt.getText());
-            localStorage.saveEmployee(employee.getId());
-            Stage stage = (Stage) error_lbl.getScene().getWindow();
-            Model.getInstance().getViewFactory().closeStage(stage);
-            Model.getInstance().getViewFactory().showViews();
-        }
-       else {
+            if (employee != null) {
+                localStorage.saveEmployee(employee.getId());
+                Stage stage = (Stage) error_lbl.getScene().getWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+                Model.getInstance().getViewFactory().showViews();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Tài khoản hoặc mật khẩu không đúng !!");
+                alert.showAndWait();
+            }
+
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
             alert.setContentText("Tài khoản hoặc mật khẩu không đúng!");

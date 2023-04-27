@@ -10,10 +10,8 @@ module com.qtvsmart.admin.admin {
     requires jersey.media.multipart;
     requires spring.test;
     requires jakarta.ws.rs;
-    requires org.apache.httpcomponents.httpclient;
-    requires org.apache.httpcomponents.httpmime;
-    requires org.apache.httpcomponents.httpcore;
     requires spring.core;
+    requires java.net.http;
 
     opens com.techsavvy.admin to javafx.fxml;
     opens com.techsavvy.admin.entity to com.google.gson;

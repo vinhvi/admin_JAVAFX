@@ -1,21 +1,29 @@
 package com.techsavvy.admin.Controller;
 
+import com.techsavvy.admin.Api.ImageApi;
 import com.techsavvy.admin.Api.ProductApi;
 import com.techsavvy.admin.Api.TypeApi;
+import com.techsavvy.admin.Models.Model;
+import com.techsavvy.admin.entity.Options;
 import com.techsavvy.admin.entity.Product;
 import com.techsavvy.admin.entity.Specifications;
 import com.techsavvy.admin.entity.Type;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -23,26 +31,31 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateProductController implements Initializable {
     private final ProductApi productApi = new ProductApi();
+
+    private final ImageApi imageApi = new ImageApi();
     private final TypeApi typeApi = new TypeApi();
-    public TableColumn<File, Integer> columStt_Image;
-    public TableColumn<File, String> columnLink_image;
-    public TableColumn<File, Void> columnOption_image;
+    public TableColumn<com.techsavvy.admin.entity.Image, Integer> columStt_Image;
+    public TableColumn<com.techsavvy.admin.entity.Image, String> columnLink_image;
+    public TableColumn<com.techsavvy.admin.entity.Image, Void> columnOption_image;
+    public Button listOptions_btn;
+    public ProgressIndicator loading_upload_image;
+    public Button btn_infor_moTa;
     private File file;
-    private final List<File> fileList = new ArrayList<>();
-    private final List<Specifications> specificationsList = new ArrayList<>();
+    private List<Specifications> specificationsList = new ArrayList<>();
+    private List<com.techsavvy.admin.entity.Image> imageList = new ArrayList<>();
     private Specifications specifications;
-    public HTMLEditor moTa_txt;
     public ImageView image_view = new ImageView();
     public TextField id_Product;
     public TextField nameProduct_txt;
-    public TextField price_txt;
     public TextField origin_txt;
     public TextField lo_txt;
-    public TextField priceSale_txt;
+
     public ComboBox<String> combobox_type = new ComboBox<>();
     public ComboBox<String> combobox_status = new ComboBox<>();
     public TextField count_txt;
@@ -51,59 +64,194 @@ public class UpdateProductController implements Initializable {
     public TableView<Specifications> table_specifi;
     public Button add_image_btn;
     public TextField nameSpecifi_txt;
-    public TableView<File> table_list_image;
-    public Button confim_btn;
+    public TableView<com.techsavvy.admin.entity.Image> table_list_image;
+    public Button confirm_btn;
     public Button huy_btn;
     public TableColumn<Specifications, Integer> columnSTT_specifi;
     public TableColumn<Specifications, String> columnName_specifi;
     public TableColumn<Specifications, String> columnDiscribes_specifi;
     public TableColumn<Specifications, Void> columnOptions_specifi;
     public Button updateSpec_btn;
+    private Product product;
+
+    private final AtomicInteger index = new AtomicInteger(0);
+
+    private Specifications specificationsInTable;
+
+
+    public Product getProduct() {
+        return product;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loading_upload_image.setVisible(false);
         loadImage();
         setCombobox();
-        try {
-            getIdProduct();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         onClick();
     }
 
-    private void getIdProduct() throws IOException {
-        String idProduct = productApi.getRandomId();
-        id_Product.setText(idProduct);
+    private void showInforOptions() throws IOException, ClassNotFoundException {
+        Product product1 = new Product();
+        product1.setId(product.getId());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/ListOptionProduct.fxml"));
+        Parent root = fxmlLoader.load();
+        ListOptionsProductController controller = fxmlLoader.getController();
+        controller.setOptionsListForTable(product1);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        List<Options> options = controller.getOptionsList();
+        System.out.println("list options: " + options);
+    }
+
+    private void showInforMoTa() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/InforMoTa.fxml"));
+        Parent root = fxmlLoader.load();
+        MoTaController controller = fxmlLoader.getController();
+        controller.setMoTa(product.getDescribes());
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        product.setDescribes(controller.getMoTa());
+    }
+
+    private void onClickTableSpecification() {
+        table_specifi.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                specifications = table_specifi.getSelectionModel().getSelectedItem();
+                nameSpecifi_txt.setText(specifications.getName());
+                detailSpecifi_txt.setText(specifications.getDescribes());
+                specificationsInTable = specifications;
+                int index1 = table_specifi.getSelectionModel().getSelectedIndex();
+                index.set(index1); // Cập nhật giá trị biến index
+            }
+        });
+    }
+
+    private void onClickTableImage() {
+        table_list_image.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                com.techsavvy.admin.entity.Image image = table_list_image.getSelectionModel().getSelectedItem();
+                Image link = new Image(image.getImageUrl());
+                image_view.setImage(link);
+            }
+        });
     }
 
     private void onClick() {
-        table_specifi.setOnMouseClicked(mouseEvent -> {
-            specifications = table_specifi.getSelectionModel().getSelectedItem();
-            if (specifications != null) {
-                nameSpecifi_txt.setText(specifications.getName());
-                detailSpecifi_txt.setText(specifications.getDescribes());
-            }
-
-        });
+        onClickTableSpecification();
+        onClickTableImage();
         addSpecifi_btn.setOnAction(actionEvent -> onAddSpecifications());
         updateSpec_btn.setOnAction(actionEvent -> updateSpecificationsInTable());
-        add_image_btn.setOnAction(actionEvent -> setTableImage());
-        confim_btn.setOnAction(actionEvent -> {
+        add_image_btn.setOnAction(actionEvent -> {
             try {
-                setProduct();
+                addImage();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        confirm_btn.setOnAction(actionEvent -> {
+            try {
+                updateSpecifi();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        listOptions_btn.setOnAction(actionEvent -> {
+            try {
+                showInforOptions();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        btn_infor_moTa.setOnAction(actionEvent -> {
+            try {
+                showInforMoTa();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
+    private void addImage() throws IOException, ClassNotFoundException {
+        if (file != null) {
+            Task<com.techsavvy.admin.entity.Image> uploadTask = new Task<>() {
+                @Override
+                protected com.techsavvy.admin.entity.Image call() throws Exception {
+                    // Hiển thị ProgressIndicator trong UI thread
+                    Platform.runLater(() -> loading_upload_image.setVisible(true));
+                    // Thực hiện upload hình ảnh trong background thread
+                    com.techsavvy.admin.entity.Image image = imageApi.uploadImage(file, id_Product.getText());
+                    add_image_btn.setDisable(true);
+                    return image;
+                }
+
+                @Override
+                protected void succeeded() {
+                    super.succeeded();
+                    // Ẩn ProgressIndicator trong UI thread khi hoàn thành
+                    loading_upload_image.setVisible(false);
+                    add_image_btn.setDisable(false);
+                    // Thêm hình ảnh vào danh sách và cập nhật bảng
+                    com.techsavvy.admin.entity.Image image = getValue();
+                    if (image != null) {
+                        imageList.add(image);
+                        ObservableList<com.techsavvy.admin.entity.Image> imageObservableList = FXCollections.observableArrayList(imageList);
+                        table_list_image.setItems(imageObservableList);
+                    }
+                    file = null;
+                    Image image1 = new Image("D:\\KLTN-2023\\TechSavvy.Me\\Admin\\src\\main\\resources\\Images\\iconImage.png");
+                    image_view.setImage(image1);
+                }
+
+                @Override
+                protected void failed() {
+                    super.failed();
+                    // Ẩn ProgressIndicator trong UI thread nếu có lỗi xảy ra
+                    loading_upload_image.setVisible(false);
+                    System.out.println("Lỗi khi upload hình ảnh!");
+                }
+            };
+            new Thread(uploadTask).start();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Lỗi !!");
+            alert.setHeaderText("Lỗi");
+            alert.setContentText("Chọn ảnh cần upload!!");
+        }
+    }
+
+
+    public void setDataInforProduct(Product product) throws IOException, ClassNotFoundException {
+        this.product = product;
+        System.out.println(product);
+        specificationsList = productApi.getSpecifiByProduct(product.getId());
+        setTableSpecifications(specificationsList);
+        imageList = imageApi.getImageByProduct(product.getId());
+        setTableImage(imageList);
+        id_Product.setText(product.getId());
+        nameProduct_txt.setText(product.getName());
+        combobox_type.setValue(product.getType().getName());
+        origin_txt.setText(product.getOrigin());
+        lo_txt.setText(product.getLo());
+        if (product.getType().isStatus()) {
+            combobox_status.setValue("Kinh doanh");
+        } else {
+            combobox_status.setValue("Không kinh doanh");
+        }
+        count_txt.setText(String.valueOf(product.getCounts()));
+
+    }
+
     private void onAddSpecifications() {
         Specifications specifications = new Specifications();
-        specifications.setId(specificationsList.size() + 1);
         specifications.setDescribes(detailSpecifi_txt.getText());
         specifications.setName(nameSpecifi_txt.getText());
-        setTableSpecifications(specifications);
+        specifications.setProduct(product);
+        specificationsList.add(specifications);
+        ObservableList<Specifications> observableList = FXCollections.observableArrayList(specificationsList);
+        table_specifi.setItems(observableList);
         setDefaultSpecifi();
     }
 
@@ -113,33 +261,27 @@ public class UpdateProductController implements Initializable {
     }
 
     private void updateSpecificationsInTable() {
-        if (specifications != null) {
-            List<Specifications> newList = new ArrayList<>();
-            for (Specifications specifications1 : specificationsList) {
-                if (specifications.getId() == specifications1.getId()) {
-                    specifications1.setName(nameSpecifi_txt.getText());
-                    specifications1.setDescribes(detailSpecifi_txt.getText());
-                }
-                newList.add(specifications1);
-            }
-            ObservableList<Specifications> newData = FXCollections.observableArrayList(newList);
-            table_specifi.setItems(newData);
-            table_specifi.refresh();
+        if (nameSpecifi_txt.getText() != null && detailSpecifi_txt != null) {
+            Specifications specifications1 = new Specifications();
+            specifications1.setId(specificationsInTable.getId());
+            specifications1.setProduct(product);
+            specifications1.setName(nameSpecifi_txt.getText());
+            specifications1.setDescribes(detailSpecifi_txt.getText());
+            specificationsList.set(index.get(), specifications1);
+            ObservableList<Specifications> observableList = FXCollections.observableArrayList(specificationsList);
+            table_specifi.setItems(observableList);
             setDefaultSpecifi();
-            specifications = null;
-
+            System.out.println(specificationsList);
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText("");
-            alert.setContentText("Chọn thông số cần sửa trong bảng !!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Lỗi!!");
+            alert.setTitle("Lỗi!!");
+            alert.setContentText("Nhập đầy đủ mô tả và chi tiết mô tả !!");
         }
-
     }
 
 
-    private void setTableSpecifications(Specifications specifications) {
-        specificationsList.add(specifications);
+    private void setTableSpecifications(List<Specifications> specificationsList) {
         columnSTT_specifi.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_specifi.getItems().indexOf(stt.getValue()) + 1));
         columnName_specifi.setCellValueFactory(name -> {
             String nameSpecifi = name.getValue().getName();
@@ -187,7 +329,6 @@ public class UpdateProductController implements Initializable {
         columnOptions_specifi.setCellFactory(cellCallback);
         ObservableList<Specifications> data = FXCollections.observableArrayList(specificationsList);
         table_specifi.setItems(data);
-
     }
 
 
@@ -207,59 +348,63 @@ public class UpdateProductController implements Initializable {
         combobox_status.setValue("Không kinh doanh");
     }
 
-    private void setTableImage() {
-        if (file != null) {
-            fileList.add(file);
-            columStt_Image.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_list_image.getItems().indexOf(stt.getValue()) + 1));
-            columnLink_image.setCellValueFactory(link -> {
-                String url = link.getValue().getName();
-                return new
-                        SimpleStringProperty(url);
-            });
+    private void setTableImage(List<com.techsavvy.admin.entity.Image> imageList) {
+        columStt_Image.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_list_image.getItems().indexOf(stt.getValue()) + 1));
+        columnLink_image.setCellValueFactory(link -> {
+            String url = link.getValue().getImageUrl();
+            return new
+                    SimpleStringProperty(url);
+        });
 
-            Callback<TableColumn<File, Void>, TableCell<File, Void>> cellCallback = new Callback<>() {
+        Callback<TableColumn<com.techsavvy.admin.entity.Image, Void>, TableCell<com.techsavvy.admin.entity.Image, Void>> cellCallback = new Callback<>() {
+            @Override
+            public TableCell<com.techsavvy.admin.entity.Image, Void> call(TableColumn<com.techsavvy.admin.entity.Image, Void> fileVoidTableColumn) {
+                return new TableCell<>() {
+                    private final Button deleteButton = new Button("Xóa");
 
-                @Override
-                public TableCell<File, Void> call(TableColumn<File, Void> fileVoidTableColumn) {
-                    return new TableCell<>() {
-                        private final Button deleteButton = new Button("Xóa");
+                    {
+                        deleteButton.setOnAction((ActionEvent event) -> {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Xác nhận xóa");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Bạn có chắc chắn muốn xóa ?");
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.isPresent() && result.get() == ButtonType.OK) {
+                                com.techsavvy.admin.entity.Image data = getTableView().getItems().get(getIndex());
+                                try {
+                                    Boolean isRemove = imageApi.deleteImage(data.getId());
+                                    if (isRemove) {
+                                        imageList.remove(data);
+                                        List<com.techsavvy.admin.entity.Image> images = new ArrayList<>(imageList);
+                                        ObservableList<com.techsavvy.admin.entity.Image> newData = FXCollections.observableArrayList(images);
+                                        table_list_image.setItems(newData);
+                                    }
 
-                        {
-                            deleteButton.setOnAction((ActionEvent event) -> {
-                                File data = getTableView().getItems().get(getIndex());
-                                fileList.remove(data);
-                                List<File> files = new ArrayList<>(fileList);
-                                System.out.println(files);
-                                ObservableList<File> newData = FXCollections.observableArrayList(files);
-                                table_list_image.setItems(newData);
-                            });
-                        }
-
-                        @Override
-                        public void updateItem(Void item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (empty) {
-                                setGraphic(null);
-                            } else {
-                                setGraphic(deleteButton);
+                                } catch (IOException | InterruptedException | ClassNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(deleteButton);
                         }
-                    };
-                }
-            };
-            columnOption_image.setCellFactory(cellCallback);
-            ObservableList<File> data = FXCollections.observableArrayList(fileList);
-            table_list_image.setItems(data);
-            file = null;
-            Image image1 = new Image("D:\\KLTN-2023\\TechSavvy.Me\\Admin\\src\\main\\resources\\Images\\iconImage.png");
-            image_view.setImage(image1);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText("");
-            alert.setContentText("Chọn ảnh cần thêm !!");
-        }
+                    }
+                };
+            }
+        };
+        columnOption_image.setCellFactory(cellCallback);
+        ObservableList<com.techsavvy.admin.entity.Image> data = FXCollections.observableArrayList(imageList);
+        table_list_image.setItems(data);
+
     }
+
 
     private void loadImage() {
         image_view.setOnMouseClicked(mouseEvent -> {
@@ -277,30 +422,46 @@ public class UpdateProductController implements Initializable {
         });
     }
 
+    private void updateSpecifi() throws IOException, ClassNotFoundException {
+        if (updateProductForDatabase()) {
+            for (Specifications specifications1 : specificationsList) {
+                if (productApi.createSpecifi(specifications1)) {
+                    Stage stage = (Stage) huy_btn.getScene().getWindow();
+                    Model.getInstance().getViewFactory().closeStage(stage);
+                } else {
+                    System.out.println("Specifi update for database: " + specifications1);
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("Xảy ra lỗi khi update thông số !!");
+                    alert.showAndWait();
+                }
+            }
+        }
+    }
 
-    private void setProduct() throws IOException {
-        Product product = new Product();
-        product.setId(id_Product.getText());
+    private boolean updateProductForDatabase() throws IOException, ClassNotFoundException {
+        boolean isUpdate;
         product.setLo(lo_txt.getText());
         product.setOrigin(origin_txt.getText());
         product.setName(nameProduct_txt.getText());
         Type type = typeApi.getByName(combobox_type.getValue());
         product.setType(type);
         product.setCounts(Integer.parseInt(count_txt.getText()));
-        product.setPrice(Float.parseFloat(price_txt.getText()));
         boolean status;
-        if (combobox_status.getValue().equals("Kinh doanh")) {
-            status = true;
-        } else {
-            status = false;
-        }
+        status = combobox_status.getValue().equals("Kinh doanh");
         product.setStatus(status);
-        System.out.println(product);
-    }
+        product.setDescribes(this.product.getDescribes());
+        if (productApi.add(product)) {
+            isUpdate = true;
+        } else {
+            isUpdate = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("xảy ra lỗi khi update product!!");
+            System.out.println(product);
+        }
+        return isUpdate;
 
-    private List<File> getListFileImage() {
-        return fileList;
     }
-
 }
 

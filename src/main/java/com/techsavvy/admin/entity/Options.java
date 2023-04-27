@@ -9,10 +9,14 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Specifications implements Serializable {
+public class Options implements Serializable {
     private int id;
-    private String name;
-    private String describes;
+    private String nameOptions;
+    private String color;
+    private float price;
+    private float priceImport;
+    private int count;
     private Product product;
+
 
 }

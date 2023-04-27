@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 
 public class GetIpAddress {
 
+    private final LocalStorage localStorage = new LocalStorage();
+
     public String getIpAddressServer() {
         String ipAddressServer = null;
         try {
@@ -16,4 +18,6 @@ public class GetIpAddress {
 
         return ipAddressServer;
     }
+
+
 }

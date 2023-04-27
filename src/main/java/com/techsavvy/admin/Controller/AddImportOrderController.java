@@ -1,23 +1,20 @@
 package com.techsavvy.admin.Controller;
 
-import com.techsavvy.admin.Api.ImportOrderApi;
-import com.techsavvy.admin.Api.ProductApi;
-import com.techsavvy.admin.Api.SupplierApi;
-import com.techsavvy.admin.entity.Product;
-import com.techsavvy.admin.entity.Supplier;
-import com.techsavvy.admin.entity.Type;
+import com.techsavvy.admin.Api.*;
+import com.techsavvy.admin.Models.LocalStorage;
+import com.techsavvy.admin.Models.Model;
+import com.techsavvy.admin.entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -32,7 +29,10 @@ import java.util.ResourceBundle;
 public class AddImportOrderController implements Initializable {
     private final SupplierApi supplierApi = new SupplierApi();
     private final ImportOrderApi importOrderApi = new ImportOrderApi();
+    private final OptionsApi optionsApi = new OptionsApi();
     private final ProductApi productApi = new ProductApi();
+    private final EmployeeApi employeeApi = new EmployeeApi();
+    private final LocalStorage localStorage = new LocalStorage();
     public Button infor_btn;
     public Button addProduct_btn;
     public TextField phoneSupplier_txt;
@@ -42,50 +42,40 @@ public class AddImportOrderController implements Initializable {
     public TextField importDate_txt;
     public TextField idImportOrder_txt;
     private final String loHang = productApi.getRandomLH();
-    @FXML
-    public TableView<Product> table_list_product = new TableView<>();
-    @FXML
-    public TableColumn<Product, Integer> column_STT = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_nameSp = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_type = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_count = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_loHang = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_origin = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, String> column_priceImport = new TableColumn<>();
-    @FXML
-    public TableColumn<Product, Void> column_options = new TableColumn<>();
-    private final List<Product> productList = new ArrayList<>();
+    public TableView<Product> table_list_product;
 
-    private static final AddImportOrderController instance;
+    public TableColumn<Product, Integer> column_STT;
 
-    static {
-        try {
-            instance = new AddImportOrderController();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public TableColumn<Product, String> column_nameSp;
 
-    public static AddImportOrderController getInstance() {
-        return instance;
-    }
+    public TableColumn<Product, String> column_type;
 
-    public AddImportOrderController() throws IOException {
+    public TableColumn<Product, String> column_count;
+
+    public TableColumn<Product, String> column_loHang;
+
+    public TableColumn<Product, String> column_origin;
+
+    public TableColumn<Product, String> column_priceImport;
+
+    public TableColumn<Product, Void> column_options;
+    private final List<Product> products = new ArrayList<>();
+    private final List<Options> options = new ArrayList<>();
+    public Button create_btn;
+    public TextField tt_txt;
+    public Button cancel_btn;
+
+
+    public AddImportOrderController() throws IOException, ClassNotFoundException {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
-        test();
+        setTableListProduct();
         try {
             setIdOrder();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -100,6 +90,7 @@ public class AddImportOrderController implements Initializable {
             }
         });
         addProduct_btn.setOnAction(actionEvent -> {
+
             try {
                 onAddProduct();
             } catch (IOException e) {
@@ -110,54 +101,29 @@ public class AddImportOrderController implements Initializable {
             try {
                 onSetSupplier();
                 System.out.println(getSupplier());
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
         infor_btn.setOnAction(actionEvent -> {
             try {
                 setInfor(getSupplier());
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    public void addProduct(Product product) {
-        productList.add(product);
-        updateTable();
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    private void updateTable() {
-        table_list_product.refresh();
-        setTableListProduct(getProductList());
-        System.out.println("product after add from list: " + productList);
-    }
-
-    private void test() {
-        Product product = new Product();
-        product.setId("SP342");
-        product.setName("adasdas");
-        product.setStatus(true);
-        product.setLo("adasd");
-        product.setOrigin("sdasd");
-        Type type = new Type();
-        type.setName("Phone");
-        product.setType(type);
-        product.setCounts(324);
-        product.setPriceImport(2342);
-        product.setPrice(34234);
-        List<Product> products = getProductList();
-        productList.add(product);
-        setTableListProduct(productList);
+        create_btn.setOnAction(actionEvent -> {
+            try {
+                crateImportOrder();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        cancel_btn.setOnAction(actionEvent -> backToImportOrder());
     }
 
 
-    private void setIdOrder() throws IOException {
+    private void setIdOrder() throws IOException, ClassNotFoundException {
         Date date = new Date();
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = outputFormat.format(date);
@@ -179,15 +145,23 @@ public class AddImportOrderController implements Initializable {
         Parent root = fxmlLoader.load();
         AddProductController controller = fxmlLoader.getController();
         controller.setLH(loHang);
-        controller.setProductList(productList);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.showAndWait();
+        Product newProduct = controller.getProduct();
+        if (newProduct != null) {
+            products.add(newProduct);
+            options.addAll(controller.getOptionsList());
+            System.out.println("List Options: " + options);
+            table_list_product.getItems().add(newProduct);
+            setTT();
+            System.out.println("Product after add: " + products);
+        }
 
     }
 
 
-    private void setTableListProduct(List<Product> products) {
+    public void setTableListProduct() {
         column_STT.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_list_product.getItems().indexOf(stt.getValue()) + 1));
         column_nameSp.setCellValueFactory(name -> {
             if (name.getValue().getName() != null) {
@@ -215,8 +189,8 @@ public class AddImportOrderController implements Initializable {
             return new SimpleStringProperty(hang);
         });
         column_priceImport.setCellValueFactory(priceImport -> {
-            String aa = String.valueOf(priceImport.getValue().getPriceImport());
-            return new SimpleStringProperty(aa);
+            String aaa = String.valueOf(products.size());
+            return new SimpleStringProperty(aaa);
         });
 
         Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellCallback = new Callback<>() {
@@ -229,11 +203,14 @@ public class AddImportOrderController implements Initializable {
                     {
                         deleteButton.setOnAction((ActionEvent event) -> {
                             Product data = getTableView().getItems().get(getIndex());
+                            products.remove(data);
+                            setTT();
+                            table_list_product.getItems().setAll(products);
                         });
 
                         infor_btn.setOnAction(actionEvent -> {
-                            Product data = getTableView().getItems().get(getIndex());
-                            System.out.println(data);
+                            Product product = getTableRow().getItem();
+                            showProductInfo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), product);
                         });
                     }
 
@@ -252,16 +229,13 @@ public class AddImportOrderController implements Initializable {
             }
         };
         column_options.setCellFactory(cellCallback);
-        ObservableList<Product> productObservableList = FXCollections.observableArrayList(products);
-        table_list_product.setItems(productObservableList);
-        System.out.println(productObservableList);
     }
 
-    private Supplier getSupplier() throws IOException {
+    private Supplier getSupplier() throws IOException, ClassNotFoundException {
         return supplierApi.getByPhone(phoneSupplier_txt.getText());
     }
 
-    private void onSetSupplier() throws IOException {
+    private void onSetSupplier() throws IOException, ClassNotFoundException {
         Supplier supplier = getSupplier();
         if (supplier != null) {
             nameSupplier_txt.setText(supplier.getName());
@@ -285,6 +259,124 @@ public class AddImportOrderController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    private List<Options> getListOptionsByProduct(String productId) {
+        List<Options> optionsList = new ArrayList<>();
+        for (Options options1 : options) {
+            if (options1.getProduct().getId().equals(productId)) {
+                optionsList.add(options1);
+            }
+        }
+        return optionsList;
+    }
+
+    public void showProductInfo(Stage stage, Product product) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/AddProduct.fxml"));
+        List<Options> optionsList = getListOptionsByProduct(product.getId());
+        try {
+            Parent root = loader.load();
+            AddProductController controller = loader.getController();
+            //set infor product
+            controller.setProduct(product);
+            //set infor tableOptions
+            controller.setTableOptions(optionsList);
+            controller.setOptionsList(optionsList);
+            //show windows update product
+            Stage dialog = new Stage();
+            dialog.initOwner(stage);
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setScene(new Scene(root));
+            dialog.showAndWait();
+            // Update the product table if the product is edited
+            if (controller.isEdited()) {
+                Product editedProduct = controller.getProduct();
+                for (Product product1 : products) {
+                    if (product1.getId().equals(editedProduct.getId())) {
+                        product1.setName(editedProduct.getName());
+                        product1.setType(editedProduct.getType());
+                        product1.setCounts(editedProduct.getCounts());
+                        product1.setOrigin(editedProduct.getOrigin());
+                        product1.setStatus(editedProduct.isStatus());
+                    }
+                }
+                options.addAll(controller.getOptionsList());
+                setTT();
+                table_list_product.getItems().setAll(products);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setTT() {
+        float tt = 0;
+        for (Options options1 : options) {
+            tt += options1.getPriceImport();
+        }
+        tt_txt.setText(tt + " VND");
+    }
+
+    private ImportOrder getImport() throws IOException, ClassNotFoundException {
+        ImportOrder importOrder = new ImportOrder();
+        importOrder.setId(idImportOrder_txt.getText());
+        Date date = new Date();
+        importOrder.setImportDate(date);
+        String idEmployee = localStorage.getEmployeeInLocal();
+        Employee employee = employeeApi.getById(idEmployee);
+        importOrder.setEmployee(employee);
+        Supplier supplier = supplierApi.getByPhone(phoneSupplier_txt.getText());
+        importOrder.setSupplier(supplier);
+        return importOrder;
+    }
+
+    private void crateImportOrder() throws IOException, ClassNotFoundException {
+        ImportOrderDetail importOrderDetail = new ImportOrderDetail();
+        float tt = 0;
+        boolean a = importOrderApi.add(getImport());
+        boolean b;
+        boolean c;
+        boolean d;
+
+        if (a) {
+            System.out.println("save importOrder: " + true);
+            for (Product product : products) {
+                b = productApi.add(product);
+                if (b) {
+                    System.out.println("save product: " + true);
+                    for (Options options : options) {
+                        if (options.getProduct().getId().equals(product.getId())) {
+                            c = optionsApi.createOptions(options);
+                            System.out.println("save options for product id: " + product.getId() + " " + c);
+                        }
+                        tt = Float.parseFloat(String.valueOf(options.getCount())) * options.getPriceImport();
+                    }
+                    importOrderDetail.setProduct(product);
+                    importOrderDetail.setCount(product.getCounts());
+                    importOrderDetail.setPrice(tt);
+                    importOrderDetail.setImportOrder(getImport());
+                    d = importOrderApi.createImportDetail(importOrderDetail);
+                    System.out.println("save importOrderDetail for productId: " + product.getId() + " " + d);
+                }
+            }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thành Công");
+            alert.setHeaderText("Tạo phiếu nhập thành công");
+            alert.setContentText("");
+            alert.show();
+            backToImportOrder();
+        } else {
+            System.out.println("save importOrder: " + false);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Lỗi");
+            alert.setContentText("");
+            alert.show();
+        }
+    }
+
+    private void backToImportOrder() {
+        Model.getInstance().getViewFactory().getSelectMenuItem().set("ListImportOrder");
     }
 
 

@@ -11,13 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListCustomerController">
+<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.techsavvy.admin.Controller.ListProductController">
    <Label alignment="CENTER" prefHeight="44.0" prefWidth="320.0" text="DANH SÁCH SẢN PHẨM">
       <font>
-         <Font name="System Bold" size="24.0" />
+         <Font name="System Bold" size="24.0"/>
       </font>
       <VBox.margin>
-         <Insets left="500.0" top="10.0" />
+         <Insets left="500.0" top="10.0"/>
       </VBox.margin>
    </Label>
    <HBox alignment="CENTER" prefHeight="171.0" prefWidth="1240.0">
@@ -35,14 +36,16 @@
          </font>
       </TextField>
    </HBox>
-   <TableView prefHeight="638.0" prefWidth="1230.0">
+   <TableView fx:id="table_list_product" prefHeight="638.0" prefWidth="1230.0">
       <columns>
-         <TableColumn prefWidth="171.20000916719437" text="Mã sản phẩm" />
-         <TableColumn prefWidth="323.99998474121094" text="Tên sản phẩm" />
-         <TableColumn prefWidth="132.0" text="Số lượng" />
-         <TableColumn prefWidth="240.0" text="Gía nhập" />
-         <TableColumn prefWidth="230.40008544921875" text="Gía bán" />
-         <TableColumn prefWidth="144.800048828125" text="Tùy chọn" />
+         <TableColumn fx:id="column_stt" prefWidth="85.0" text="STT"/>
+         <TableColumn fx:id="column_ma" prefWidth="112.0" text="Mã sản phẩm"/>
+         <TableColumn fx:id="column_nameProduct" prefWidth="277.0" text="Tên sản phẩm"/>
+         <TableColumn fx:id="column_type" prefWidth="170.0" text="Loại"/>
+         <TableColumn fx:id="column_count" prefWidth="124.0" text="Số lượng"/>
+         <TableColumn fx:id="column_LH" minWidth="0.0" prefWidth="162.0" text="Lô Hàng Số"/>
+         <TableColumn fx:id="column_countOptions" prefWidth="157.0" text="Số Phiên Bản"/>
+         <TableColumn fx:id="column_options" minWidth="0.0" prefWidth="137.0" text="Tùy chọn"/>
       </columns>
       <VBox.margin>
          <Insets left="5.0" right="5.0" />

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -18,42 +18,59 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
+         <VBox.margin>
+            <Insets left="450.0" top="30.0" />
+         </VBox.margin>
       </Label>
-      <HBox alignment="CENTER" prefHeight="222.0" prefWidth="1240.0">
-         <Pane prefHeight="222.0" prefWidth="1264.0">
-            <Button fx:id="search_btn" layoutX="29.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Tìm kiếm">
-               <graphic>
-                  <FontAwesomeIconView glyphName="SEARCH" size="16" />
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <TextField alignment="CENTER" layoutX="134.0" layoutY="183.0" prefHeight="25.0" prefWidth="258.0" promptText="Nhập từ khóa">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></TextField>
-            <Button fx:id="add_btn" layoutX="811.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" text="Thêm hóa đơn">
-               <graphic>
-                  <FontAwesomeIconView glyphName="PLUS" size="16" />
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </Pane>
+      <HBox alignment="CENTER" prefHeight="188.0" prefWidth="1230.0">
+         <Button fx:id="search_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Tìm kiếm">
+            <graphic>
+               <FontAwesomeIconView glyphName="SEARCH" size="16" />
+            </graphic>
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+               <Insets top="50.0" />
+            </HBox.margin>
+         </Button>
+         <TextField alignment="CENTER" prefHeight="25.0" prefWidth="258.0" promptText="Nhập từ khóa">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="10.0" top="50.0" />
+            </HBox.margin>
+         </TextField>
+         <Button fx:id="add_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" text="Thêm hóa đơn">
+            <graphic>
+               <FontAwesomeIconView glyphName="PLUS" size="16" />
+            </graphic>
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="100.0" top="50.0" />
+            </HBox.margin>
+         </Button>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
       </HBox>
-      <TableView prefHeight="540.0" prefWidth="1240.0">
+      <TableView fx:id="table_importOrder" prefHeight="595.0" prefWidth="1220.0">
          <columns>
-            <TableColumn prefWidth="55.0" text="STT" />
-            <TableColumn prefWidth="125.0" text="Mã hóa đơn" />
-            <TableColumn prefWidth="195.0" text="Tên nhà cung cấp" />
-            <TableColumn prefWidth="195.0" text="Email" />
-            <TableColumn minWidth="2.0" prefWidth="181.0" text="Số điện thoại" />
-            <TableColumn prefWidth="164.0" text="Ngày nhập" />
-            <TableColumn minWidth="0.0" prefWidth="164.0" text="Thành tiền" />
-            <TableColumn prefWidth="157.0" text="Tùy chọn" />
+            <TableColumn fx:id="column_stt" prefWidth="55.0" text="STT" />
+            <TableColumn fx:id="column_id" prefWidth="125.0" text="Mã hóa đơn" />
+            <TableColumn fx:id="column_nameSupplier" prefWidth="195.0" text="Tên nhà cung cấp" />
+            <TableColumn fx:id="column_email" prefWidth="195.0" text="Email" />
+            <TableColumn fx:id="column_sdt" minWidth="2.0" prefWidth="181.0" text="Số điện thoại" />
+            <TableColumn fx:id="column_date" prefWidth="164.0" text="Ngày nhập" />
+            <TableColumn fx:id="column_tt" minWidth="0.0" prefWidth="164.0" text="Thành tiền" />
+            <TableColumn fx:id="column_options" prefWidth="157.0" text="Tùy chọn" />
          </columns>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
       </TableView>
    </VBox>
 </AnchorPane>

@@ -1,4 +1,5 @@
 package com.techsavvy.admin.entity;
+
 import lombok.*;
 
 import java.io.Serializable;

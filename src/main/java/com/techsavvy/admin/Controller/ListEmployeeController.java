@@ -45,7 +45,7 @@ public class ListEmployeeController implements Initializable {
         addListener();
         try {
             setRoleColumn();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -69,7 +69,7 @@ public class ListEmployeeController implements Initializable {
         infor_btn.setOnAction(actionEvent -> {
             try {
                 inforEmployee();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -83,14 +83,20 @@ public class ListEmployeeController implements Initializable {
         stage.show();
     }
 
-    private void setRoleColumn() throws IOException {
+    private void setRoleColumn() throws IOException, ClassNotFoundException {
         roleColumn.setCellValueFactory(cellData -> {
             try {
+                String chucVu = "";
                 Account account = accountApi.getByEmail(cellData.getValue().getEmail());
                 Set<Role> roles = account.getRoles();
                 String roleNames = roles.stream().map(Role::getName).collect(Collectors.joining(",  "));
-                return new SimpleStringProperty(roleNames);
-            } catch (IOException e) {
+                if (roleNames.equals("ROLE_EMPLOYEE")) {
+                    chucVu = "Nhân Viên";
+                } else {
+                    chucVu = "Quản Lý";
+                }
+                return new SimpleStringProperty(chucVu);
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
@@ -140,7 +146,7 @@ public class ListEmployeeController implements Initializable {
 
     }
 
-    private void inforEmployee() throws IOException {
+    private void inforEmployee() throws IOException, ClassNotFoundException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/InforEmployee.fxml"));
         Parent root = fxmlLoader.load();
         InforEmployeeController inforEmployeeController = fxmlLoader.getController();

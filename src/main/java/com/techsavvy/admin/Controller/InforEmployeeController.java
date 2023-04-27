@@ -51,6 +51,9 @@ public class InforEmployeeController implements Initializable {
     public CheckBox checkbox_2;
     public CheckBox checkbox_3;
 
+    public InforEmployeeController() throws IOException, ClassNotFoundException {
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -62,17 +65,17 @@ public class InforEmployeeController implements Initializable {
     private void addListener() {
         huy_btn.setOnAction(actionEvent -> onClose());
         update_btn.setOnAction(actionEvent -> {
-                    try {
-                        Employee employee = getEmployee();
-                        System.out.println(employee);
-                        if (employeeApi.update(employee)) {
-                            onClose();
-                        } else {
-                            System.out.println("Up date employee error!!");
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            try {
+                Employee employee = getEmployee();
+                System.out.println(employee);
+                if (employeeApi.update(employee)) {
+                    onClose();
+                } else {
+                    System.out.println("Up date employee error!!");
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
                 }
         );
     }
@@ -90,7 +93,7 @@ public class InforEmployeeController implements Initializable {
         combobox_sex.setItems(sex);
     }
 
-    public void setInforEmployee(String maNV) throws IOException {
+    public void setInforEmployee(String maNV) throws IOException, ClassNotFoundException {
 
         getEmployee = employeeApi.getById(maNV);
         maNV_txt.setText(getEmployee.getId());
@@ -111,12 +114,13 @@ public class InforEmployeeController implements Initializable {
         Account account = accountApi.getByEmail(email_txt.getText());
         Set<Role> roles = account.getRoles();
         for (Role role : roles) {
-            if (role.getName().equals("ADMIN")) {
+            if (role.getName().equals("ROLE_ADMIN")) {
                 checkbox_1.setSelected(true);
             }
-            if (role.getName().equals("EMPLOYEE")) {
+            if (role.getName().equals("ROLE_EMPLOYEE")) {
                 checkbox_2.setSelected(true);
-            }  if (role.getName().equals("CUSTOMER")) {
+            }
+            if (role.getName().equals("ROLE_CUSTOMER")) {
                 checkbox_3.setSelected(true);
             }
 
@@ -129,7 +133,7 @@ public class InforEmployeeController implements Initializable {
         }
     }
 
-    public Employee getEmployee() throws IOException {
+    public Employee getEmployee() throws IOException, ClassNotFoundException {
         Employee employee = new Employee();
         employee.setId(maNV_txt.getText());
         Account account = accountApi.getByEmail(email_txt.getText());

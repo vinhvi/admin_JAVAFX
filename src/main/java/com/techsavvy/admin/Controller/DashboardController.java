@@ -32,9 +32,12 @@ public class DashboardController implements Initializable {
     public Label name_label;
     public TableView<Product> tableView;
     public TableColumn<Product, Integer> columnSTT;
-    public TableColumn<Product,String> columnMaSP;
-    public TableColumn<Product,String> columnCount;
-    public TableColumn<Product,String> columnNamSP;
+    public TableColumn<Product, String> columnMaSP;
+    public TableColumn<Product, String> columnCount;
+    public TableColumn<Product, String> columnNamSP;
+
+    public DashboardController() throws IOException, ClassNotFoundException {
+    }
 
 
     @Override
@@ -94,8 +97,8 @@ public class DashboardController implements Initializable {
     private void setColumn(){
         columnSTT.setCellValueFactory(column -> new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(column.getValue()) + 1));
         columnMaSP.setCellValueFactory(column1-> new SimpleStringProperty(String.valueOf(column1.getValue().getId())));
-        columnNamSP.setCellValueFactory(column2-> new SimpleStringProperty(column2.getValue().getName()));
-        columnCount.setCellValueFactory(column3-> new SimpleStringProperty(String.valueOf(column3.getValue().getCountSale())));
+        columnNamSP.setCellValueFactory(column2 -> new SimpleStringProperty(column2.getValue().getName()));
+        columnCount.setCellValueFactory(column3 -> new SimpleStringProperty(String.valueOf(column3.getValue().getCounts())));
 
         ObservableList<Product> products = FXCollections.observableArrayList(setList());
         tableView.setItems(products);
@@ -107,27 +110,27 @@ public class DashboardController implements Initializable {
         Product product = new Product();
         product.setId("SP001");
         product.setName("iphone 6");
-        product.setCountSale(49);
+        product.setCounts(49);
         products.add(product);
         Product product1 = new Product();
         product1.setId("SP002");
         product1.setName("iphone 7");
-        product1.setCountSale(40);
+        product1.setCounts(40);
         products.add(product1);
         Product product2 = new Product();
         product2.setId("SP003");
         product2.setName("iphone x");
-        product2.setCountSale(35);
+        product2.setCounts(35);
         products.add(product2);
         Product product3 = new Product();
         product3.setId("SP004");
         product3.setName("iphone 11");
-        product3.setCountSale(20);
+        product3.setCounts(20);
         products.add(product3);
         Product product4 = new Product();
         product4.setId("SP005");
         product4.setName("iphone 11 pro max");
-        product4.setCountSale(35);
+        product4.setCounts(35);
         products.add(product4);
         return products;
     }

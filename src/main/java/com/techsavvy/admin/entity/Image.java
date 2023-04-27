@@ -9,4 +9,5 @@ public class Image {
     private String id;
     private String name;
     private String imageUrl;
+    private Product product;
 }

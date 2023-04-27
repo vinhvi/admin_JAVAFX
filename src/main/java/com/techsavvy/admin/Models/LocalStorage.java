@@ -31,8 +31,6 @@ public class LocalStorage {
         String token = (String) in.readObject();
         in.close();
         fileIn.close();
-        System.out.println("Toke in local: " + token);
-
         return token;
     }
 

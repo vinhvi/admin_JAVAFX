@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Supplier;
 
 import java.io.*;
@@ -13,7 +14,8 @@ import java.util.List;
 
 public class SupplierApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
-    private final String ipAddress = "http://" + getIpAddress.getIpAddressServer() + ":8521/api/suppliers";
+    private final String ipAddress = "http://" + getIpAddress.getIpAddressServer() + ":8521/api/manage/suppliers";
+    private final LocalStorage localStorage = new LocalStorage();
 
     public String getRandomId() throws IOException {
         String id = "";
@@ -33,7 +35,7 @@ public class SupplierApi {
             id = response;
         } else {
             // Xử lý lỗi
-            System.out.println("Lỗi kết nối đến API: " + responseCode);
+            System.out.println("Lỗi kết nối đến API getRandomId Supplier: " + responseCode);
         }
 
         return id;
@@ -65,7 +67,7 @@ public class SupplierApi {
             // Read the response body
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -75,12 +77,14 @@ public class SupplierApi {
         return false;
     }
 
-    public List<Supplier> getListSupplier() throws IOException {
+    public List<Supplier> getListSupplier() throws IOException, ClassNotFoundException {
         String url = ipAddress + "/getListSupplier";
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         InputStream inputStream = connection.getInputStream();
         List<Supplier> suppliers = new ObjectMapper().readValue(inputStream, new TypeReference<>() {
         });
@@ -88,12 +92,14 @@ public class SupplierApi {
         return suppliers;
     }
 
-    public Supplier getByPhone(String phone) throws IOException {
+    public Supplier getByPhone(String phone) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/getByPhone/" + phone;
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

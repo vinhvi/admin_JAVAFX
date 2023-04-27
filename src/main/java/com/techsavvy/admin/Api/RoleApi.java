@@ -3,6 +3,7 @@ package com.techsavvy.admin.Api;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Role;
 
 import java.io.BufferedReader;
@@ -16,17 +17,19 @@ import java.util.List;
 
 public class RoleApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
+    private final LocalStorage localStorage = new LocalStorage();
     private final String ipAddress = "http://"+ getIpAddress.getIpAddressServer() + ":8521";
 
     public RoleApi() {
     }
 
-    public List<Role> getAllRoles() throws IOException {
+    public List<Role> getAllRoles() throws IOException, ClassNotFoundException {
         String apiUrl = ipAddress + "/api/role/getList";
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -50,11 +53,13 @@ public class RoleApi {
         }
     }
 
-    public Role getByName(String name) throws IOException {
+    public Role getByName(String name) throws IOException, ClassNotFoundException {
         String apiUrl = ipAddress + "/api/role/getByName?name=" + name;
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -68,7 +73,6 @@ public class RoleApi {
 
             // Parse JSON response into a list of Role objects
             Gson gson = new Gson();
-
             return gson.fromJson(response.toString(), Role.class);
         } else {
             throw new IOException("Failed to retrieve roles from API, status code: " + status);

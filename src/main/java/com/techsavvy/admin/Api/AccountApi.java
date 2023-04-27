@@ -3,6 +3,7 @@ package com.techsavvy.admin.Api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Account;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ import java.net.URL;
 public class AccountApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
     private final String ipAddress = "http://"+ getIpAddress.getIpAddressServer() + ":8521";
-
+    private final LocalStorage localStorage = new LocalStorage();
     public boolean createAccount(Account account) throws IOException {
         String url = ipAddress + "/api/auth/register";
 
@@ -86,12 +87,14 @@ public class AccountApi {
         return null;
     }
 
-    public Account getByEmail(String email) throws IOException {
+    public Account getByEmail(String email) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/api/manage/account/getByEmail/" + email;
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

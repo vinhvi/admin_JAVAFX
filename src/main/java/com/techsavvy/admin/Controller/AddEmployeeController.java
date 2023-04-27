@@ -41,13 +41,16 @@ public class AddEmployeeController implements Initializable {
     public TextField pass_txt;
     public Button add_btn;
 
+    public AddEmployeeController() throws IOException, ClassNotFoundException {
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
         try {
             setId();
             getRole();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         setValeComboboxSex();
@@ -58,7 +61,7 @@ public class AddEmployeeController implements Initializable {
         add_btn.setOnAction(actionEvent -> {
             try {
                 createEmployee();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -69,13 +72,13 @@ public class AddEmployeeController implements Initializable {
         Model.getInstance().getViewFactory().closeStage(stage);
     }
 
-    public void setId() throws IOException {
+    public void setId() throws IOException, ClassNotFoundException {
         EmployeeApi employeeApi = new EmployeeApi();
         String id = employeeApi.getRandomId();
         maNV_txt.setText(id);
     }
 
-    public void getRole() throws IOException {
+    public void getRole() throws IOException, ClassNotFoundException {
         ObservableList<String> roles = FXCollections.observableArrayList();
         List<Role> roleList = roleApi.getAllRoles();
         for (Role role1 : roleList) {
@@ -96,7 +99,7 @@ public class AddEmployeeController implements Initializable {
         combobox_sex.setItems(sex);
     }
 
-    public void createEmployee() throws IOException {
+    public void createEmployee() throws IOException, ClassNotFoundException {
         Employee employee  = getEmployee();
         if (employeeApi.add(employee)){
             onClose();

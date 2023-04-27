@@ -2,6 +2,7 @@ package com.techsavvy.admin.Api;
 
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Type;
 
 import java.io.BufferedReader;
@@ -12,13 +13,18 @@ import java.net.URL;
 
 public class TypeApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
-    private final String ipAddress = "http://"+ getIpAddress.getIpAddressServer() + ":8521";
+    private final String ipAddress = "http://" + getIpAddress.getIpAddressServer() + ":8521";
 
-    public Type getByName(String name) throws IOException {
+    private final LocalStorage localStorage = new LocalStorage();
+
+    public Type getByName(String name) throws IOException, ClassNotFoundException {
         String apiUrl = ipAddress + "/api/types/getByName/" + name;
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

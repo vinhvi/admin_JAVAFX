@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Employee;
 
 import java.io.*;
@@ -17,16 +18,19 @@ public class EmployeeApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
     private final String ipAddress = "http://" + getIpAddress.getIpAddressServer() + ":8521/api/manage";
 
-    public EmployeeApi() {
-    }
+    private final LocalStorage localStorage = new LocalStorage();
 
-    public String getRandomId() throws IOException {
+
+    public String getRandomId() throws IOException, ClassNotFoundException {
         String id = "";
+        String token = "Bearer " + localStorage.getTokenInLocal();
         String api = ipAddress + "/admin/employee/getRandomId";
         URL url = new URL(api);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
+        System.out.println("token gửi về server: " + token);
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
             // Đọc phản hồi từ API
@@ -44,14 +48,15 @@ public class EmployeeApi {
         return id;
     }
 
-    public boolean add(Employee employee) throws IOException {
+    public boolean add(Employee employee) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/admin/employee/create";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
+        String token = "Bearer " + localStorage.getTokenInLocal();
         // Set the request method and headers
         con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Authorization", token);
 
         // Convert Employee object to JSON format
         ObjectMapper mapper = new ObjectMapper();
@@ -80,26 +85,30 @@ public class EmployeeApi {
         return false;
     }
 
-    public List<Employee> getListEmployee() throws IOException {
+    public List<Employee> getListEmployee() throws IOException, ClassNotFoundException {
         String url = ipAddress + "/employee/getListEmployee";
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         InputStream inputStream = connection.getInputStream();
         List<Employee> employees = new ObjectMapper().readValue(inputStream, new TypeReference<>() {
         });
         inputStream.close();
-        System.out.println(employees);
+//        System.out.println(employees);
         return employees;
     }
 
-    public Employee getById(String maNV) throws IOException {
+    public Employee getById(String maNV) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/employee/getById/" + maNV;
         URL obj = new URL(url);
+        String token = "Bearer " + localStorage.getTokenInLocal();
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -120,12 +129,14 @@ public class EmployeeApi {
         }
     }
 
-    public Employee getByEmail(String email) throws IOException {
+    public Employee getByEmail(String email) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/employee/getByEmail/" + email;
+        String token = "Bearer " + localStorage.getTokenInLocal();
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
         int status = connection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -146,14 +157,17 @@ public class EmployeeApi {
         }
     }
 
-    public boolean update(Employee employee) throws IOException {
+
+    public boolean update(Employee employee) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/employee/update";
         URL obj = new URL(url);
+        String token = "Bearer " + localStorage.getTokenInLocal();
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         // Set the request method and headers
         con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Authorization", token);
 
         // Convert Employee object to JSON format
         ObjectMapper mapper = new ObjectMapper();

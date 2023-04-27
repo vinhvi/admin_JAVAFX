@@ -26,6 +26,9 @@ public class MenuController implements Initializable {
     public Label nameNV_txt;
     public Label role_txt;
 
+    public MenuController() throws IOException, ClassNotFoundException {
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListeners();

@@ -36,7 +36,7 @@ public class ListSupplierController implements Initializable {
     public TableColumn<Supplier, Void> column_options;
     public TableView<Supplier> table_supplier;
 
-    public ListSupplierController() throws IOException {
+    public ListSupplierController() throws IOException, ClassNotFoundException {
     }
 
     @Override
