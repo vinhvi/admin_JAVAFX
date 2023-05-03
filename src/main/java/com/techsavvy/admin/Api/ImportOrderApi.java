@@ -11,6 +11,7 @@ import com.techsavvy.admin.entity.ImportOrderDetail;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ImportOrderApi {
@@ -158,7 +159,11 @@ public class ImportOrderApi {
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Authorization", token);
         InputStream inputStream = connection.getInputStream();
-        List<ImportOrder> importOrders = new ObjectMapper().readValue(inputStream, new TypeReference<>() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        mapper.setDateFormat(dateFormat);
+        List<ImportOrder> importOrders = mapper.readValue(inputStream, new TypeReference<>() {
         });
         inputStream.close();
         return importOrders;
@@ -173,7 +178,12 @@ public class ImportOrderApi {
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Authorization", token);
         InputStream inputStream = connection.getInputStream();
-        List<ImportOrderDetail> importOrderDetails = new ObjectMapper().readValue(inputStream, new TypeReference<>() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        mapper.setDateFormat(dateFormat);
+
+        List<ImportOrderDetail> importOrderDetails = mapper.readValue(inputStream, new TypeReference<>() {
         });
         inputStream.close();
         return importOrderDetails;

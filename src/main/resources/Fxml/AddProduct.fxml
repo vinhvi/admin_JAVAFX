@@ -248,7 +248,7 @@
                     <TableColumn fx:id="column_count" prefWidth="115.0" text="Số Lượng" />
                     <TableColumn fx:id="column_priceImport" prefWidth="153.0" text="Giá Nhập" />
                     <TableColumn fx:id="column_priceSale" prefWidth="146.0" text="Giá Bán" />
-                    <TableColumn fx:id="column_options" prefWidth="112.0" text="Tùy Chọn" />
+                    <TableColumn fx:id="column_options" prefWidth="115.0" text="Tùy Chọn" />
                 </columns>
                 <VBox.margin>
                     <Insets left="5.0" right="5.0" top="5.0" />

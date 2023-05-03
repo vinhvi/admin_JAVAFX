@@ -1,13 +1,11 @@
 package com.techsavvy.admin.Controller;
 
+import com.techsavvy.admin.Api.EvaluateApi;
 import com.techsavvy.admin.Api.ImageApi;
 import com.techsavvy.admin.Api.ProductApi;
 import com.techsavvy.admin.Api.TypeApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.Options;
-import com.techsavvy.admin.entity.Product;
-import com.techsavvy.admin.entity.Specifications;
-import com.techsavvy.admin.entity.Type;
+import com.techsavvy.admin.entity.*;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,15 +35,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateProductController implements Initializable {
     private final ProductApi productApi = new ProductApi();
-
     private final ImageApi imageApi = new ImageApi();
     private final TypeApi typeApi = new TypeApi();
+    private final EvaluateApi evaluateApi =new EvaluateApi();
     public TableColumn<com.techsavvy.admin.entity.Image, Integer> columStt_Image;
     public TableColumn<com.techsavvy.admin.entity.Image, String> columnLink_image;
     public TableColumn<com.techsavvy.admin.entity.Image, Void> columnOption_image;
     public Button listOptions_btn;
     public ProgressIndicator loading_upload_image;
     public Button btn_infor_moTa;
+    public Button question_btn;
+    public Button evaluate_btn;
     private File file;
     private List<Specifications> specificationsList = new ArrayList<>();
     private List<com.techsavvy.admin.entity.Image> imageList = new ArrayList<>();
@@ -169,6 +169,13 @@ public class UpdateProductController implements Initializable {
             try {
                 showInforMoTa();
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        evaluate_btn.setOnAction(actionEvent -> {
+            try {
+                getListEvaluate();
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -462,6 +469,17 @@ public class UpdateProductController implements Initializable {
         }
         return isUpdate;
 
+    }
+
+    private void getListEvaluate() throws IOException, ClassNotFoundException {
+        List<Evaluate> evaluateList = evaluateApi.getListEvaluateByProduct(product.getId());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/ListEvaluate.fxml"));
+        Parent root = fxmlLoader.load();
+        ListEvaluateController controller = fxmlLoader.getController();
+        controller.setTable_evaluate(evaluateList);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
 

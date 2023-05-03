@@ -7,63 +7,67 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.SaleOrderController">
-    <VBox prefHeight="900" prefWidth="1240.0">
-         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="444.0" text="DANH SÁCH HÓA ĐƠN BÁN HÀNG">
-             <font>
-                 <Font name="System Bold" size="24.0" />
-             </font>
-             <VBox.margin>
-                 <Insets left="400.0" top="20.0" />
-             </VBox.margin>
-         </Label>
-         <HBox alignment="CENTER" prefHeight="187.0" prefWidth="1240.0">
-             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Tìm kiếm">
-                 <graphic>
-                     <FontAwesomeIconView glyphName="SEARCH" size="16" />
-                 </graphic>
-                 <HBox.margin>
-                     <Insets right="20.0" />
-                 </HBox.margin>
-             </Button>
-             <TextField prefHeight="25.0" prefWidth="258.0">
-                 <HBox.margin>
-                     <Insets right="20.0" />
-                 </HBox.margin>
-             </TextField>
-             <Button fx:id="creatOrder_btn" prefHeight="25.0" prefWidth="178.0" text="Tạo hóa đơn mới">
-                 <graphic>
-                     <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="16" />
-                 </graphic>
-                 <HBox.margin>
-                     <Insets left="100.0" />
-                 </HBox.margin>
-                 <font>
-                     <Font name="System Bold" size="14.0" />
-                 </font>
-             </Button>
-         </HBox>
-         <TableView prefHeight="624.0" prefWidth="1240.0">
-             <columns>
-                 <TableColumn prefWidth="70.0" text="STT" />
-                 <TableColumn prefWidth="127.0" text="Mã Hóa Đơn" />
-                 <TableColumn prefWidth="147.0" text="Tên Khách hàng" />
-                 <TableColumn prefWidth="161.0" text="Email" />
-                 <TableColumn prefWidth="168.0" text="Số điện thoại" />
-                 <TableColumn prefWidth="137.0" text="Thành Tiền" />
-                 <TableColumn prefWidth="145.0" text="Thanh Toán" />
-                 <TableColumn minWidth="0.0" prefWidth="144.0" text="Giao hàng" />
-                 <TableColumn prefWidth="109.0" text="Tùy Chọn" />
-             </columns>
-         <VBox.margin>
-            <Insets left="5.0" right="5.0" />
-         </VBox.margin>
-         </TableView>
-    </VBox>
+<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.SaleOrderController">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="444.0" text="DANH SÁCH HÓA ĐƠN BÁN HÀNG">
+          <font>
+              <Font name="System Bold" size="24.0" />
+          </font>
+          <VBox.margin>
+              <Insets left="400.0" top="50.0" />
+          </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="157.0" prefWidth="1240.0">
+          <Button fx:id="search_btn" mnemonicParsing="false" prefHeight="30.0" prefWidth="97.0" text="Tìm Kiếm">
+              <graphic>
+                  <FontAwesomeIconView glyphName="SEARCH" size="16" />
+              </graphic>
+              <HBox.margin>
+                  <Insets right="20.0" />
+              </HBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+          </Button>
+          <TextField fx:id="search_txt" prefHeight="30.0" prefWidth="258.0" promptText="Nhập mã hóa đơn cần tìm...">
+              <HBox.margin>
+                  <Insets right="20.0" />
+              </HBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+          </TextField>
+          <Button fx:id="creatOrder_btn" prefHeight="25.0" prefWidth="178.0" text="Tạo hóa đơn mới">
+              <graphic>
+                  <FontAwesomeIconView fill="#13a441" glyphName="PLUS_CIRCLE" size="20" />
+              </graphic>
+              <HBox.margin>
+                  <Insets left="100.0" />
+              </HBox.margin>
+              <font>
+                  <Font name="System Bold" size="14.0" />
+              </font>
+          </Button>
+      </HBox>
+      <TableView fx:id="table_Order" prefHeight="624.0" prefWidth="1240.0">
+          <columns>
+              <TableColumn fx:id="column_stt" prefWidth="70.0" text="STT" />
+              <TableColumn fx:id="column_id" prefWidth="112.0" text="Mã Hóa Đơn" />
+              <TableColumn fx:id="column_name_customer" prefWidth="138.0" text="Tên Khách hàng" />
+              <TableColumn fx:id="column_email" prefWidth="124.0" text="Email" />
+              <TableColumn fx:id="column_sdt" prefWidth="123.0" text="Số điện thoại" />
+              <TableColumn fx:id="column_tt" prefWidth="130.0" text="Thành Tiền" />
+         <TableColumn fx:id="column_booking_date" prefWidth="123.0" text="Ngày Đặt" />
+              <TableColumn fx:id="column_status_payment" prefWidth="145.0" text="Tình Trạng Thanh Toán" />
+              <TableColumn fx:id="column_status_ship" minWidth="0.0" prefWidth="146.0" text="Tình Trạng Giao Hàng" />
+              <TableColumn fx:id="column_options" prefWidth="117.0" text="Tùy Chọn" />
+          </columns>
+      <VBox.margin>
+         <Insets left="5.0" right="5.0" />
+      </VBox.margin>
+      </TableView>
 
-</AnchorPane>
+</VBox>

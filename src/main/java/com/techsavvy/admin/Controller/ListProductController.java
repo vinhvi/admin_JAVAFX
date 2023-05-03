@@ -1,7 +1,9 @@
 package com.techsavvy.admin.Controller;
 
+import com.techsavvy.admin.Api.EvaluateApi;
 import com.techsavvy.admin.Api.OptionsApi;
 import com.techsavvy.admin.Api.ProductApi;
+import com.techsavvy.admin.entity.Evaluate;
 import com.techsavvy.admin.entity.Options;
 import com.techsavvy.admin.entity.Product;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -28,17 +30,21 @@ import java.util.ResourceBundle;
 
 public class ListProductController implements Initializable {
     private final ProductApi productApi = new ProductApi();
+    private final EvaluateApi evaluateApi = new EvaluateApi();
     private final OptionsApi optionsApi = new OptionsApi();
     public TableView<Product> table_list_product;
+
     public TableColumn<Product, Integer> column_stt;
     public TableColumn<Product, String> column_ma;
     public TableColumn<Product, String> column_nameProduct;
+
     public TableColumn<Product, String> column_count;
     public TableColumn<Product, String> column_type;
     public TableColumn<Product, String> column_LH;
 
     public TableColumn<Product, Void> column_options;
     public TableColumn<Product, String> column_countOptions;
+    public TableColumn<Product, String> column_evaluate;
 
 
     @Override
@@ -71,6 +77,29 @@ public class ListProductController implements Initializable {
         column_count.setCellValueFactory(sol -> {
             String count = String.valueOf(sol.getValue().getCounts());
             return new SimpleStringProperty(count);
+        });
+        column_evaluate.setCellValueFactory(column -> {
+            String product_id = column.getValue().getId();
+            try {
+                String result;
+                List<Evaluate> evaluateList = evaluateApi.getListEvaluateByProduct(product_id);
+                if (evaluateList.isEmpty()) {
+                    result = "Chưa có đánh giá nào !";
+                } else {
+                    int a = 0;
+                    int totalEvaluate = 0;
+                    for (Evaluate evaluate : evaluateList) {
+                        a += evaluate.getValue();
+                        totalEvaluate++;
+                    }
+                    int tb = a / totalEvaluate;
+                    result = tb + "/5⭐";
+
+                }
+                return new SimpleStringProperty(result);
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         });
         column_LH.setCellValueFactory(lh -> {
             String adc = lh.getValue().getLo();

@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 public class ViewFactory {
     private final StringProperty selectMenuItem;
     private VBox dasAnchorView;
-    private AnchorPane listCustomer;
+    private VBox listCustomer;
     private AnchorPane listImportOrder;
     private VBox createImportOrder;
-    private AnchorPane saleOrder;
-    private AnchorPane createSaleOrder;
+    private VBox saleOrder;
+    private VBox createSaleOrder;
     private VBox listProduct;
     private VBox listEmployee;
     private VBox listSupplier;
@@ -64,7 +64,7 @@ public class ViewFactory {
         createStage(loader);
     }
 
-    public AnchorPane getListCustomer() {
+    public VBox getListCustomer() {
         if (listCustomer == null) {
             try {
                 listCustomer = new FXMLLoader(getClass().getResource("/Fxml/ListCustomer.fxml")).load();
@@ -97,7 +97,7 @@ public class ViewFactory {
         return createImportOrder;
     }
 
-    public AnchorPane getSaleOrder() {
+    public VBox getSaleOrder() {
         if (saleOrder == null) {
             try {
                 saleOrder = new FXMLLoader(getClass().getResource("/Fxml/SaleOrder.fxml")).load();
@@ -108,7 +108,7 @@ public class ViewFactory {
         return saleOrder;
     }
 
-    public AnchorPane getCreateSaleOrder() {
+    public VBox getCreateSaleOrder() {
         if (createSaleOrder == null) {
             try {
                 createSaleOrder = new FXMLLoader(getClass().getResource("/Fxml/CreateSaleOrder.fxml")).load();

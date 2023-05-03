@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ImportOrderController">
    <VBox prefHeight="900.0" prefWidth="1240.0" stylesheets="@../Styles/importOrder.css">
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="320.0" stylesheets="@../Styles/importOrder.css" text="HÓA ĐƠN NHẬP HÀNG">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="397.0" stylesheets="@../Styles/importOrder.css" text="DANH SÁCH PHIẾU NHẬP HÀNG">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

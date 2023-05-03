@@ -17,6 +17,7 @@ public class AccountApi {
     public final GetIpAddress getIpAddress = new GetIpAddress();
     private final String ipAddress = "http://"+ getIpAddress.getIpAddressServer() + ":8521";
     private final LocalStorage localStorage = new LocalStorage();
+
     public boolean createAccount(Account account) throws IOException {
         String url = ipAddress + "/api/auth/register";
 

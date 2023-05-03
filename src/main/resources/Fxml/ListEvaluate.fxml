@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="CENTER" prefHeight="800.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListEvaluateController">
+   <Label alignment="CENTER" prefHeight="55.0" prefWidth="391.0" text="Danh Sách Các Đánh Giá Của Sản Phẩm">
+      <font>
+         <Font name="System Bold" size="20.0"/>
+      </font>
+      <VBox.margin>
+         <Insets bottom="50.0"/>
+      </VBox.margin>
+   </Label>
+   <TableView fx:id="table_evaluate" prefHeight="601.0" prefWidth="1240.0">
+      <columns>
+         <TableColumn fx:id="column_stt" prefWidth="75.0" text="STT"/>
+         <TableColumn fx:id="column_id" prefWidth="137.0" text="Mã Khách Hàng"/>
+         <TableColumn fx:id="column_name" prefWidth="129.0" text="Tên Khách Hàng"/>
+         <TableColumn fx:id="column_email" prefWidth="137.0" text="Email"/>
+         <TableColumn fx:id="column_phone" prefWidth="137.0" text="Số Điện Thoại"/>
+         <TableColumn fx:id="column_date" prefWidth="137.0" text="Ngày Đánh Giá"/>
+         <TableColumn fx:id="column_content" prefWidth="234.0" text="Nội Dung"/>
+         <TableColumn fx:id="column_value" prefWidth="128.0" text="Đánh Giá "/>
+         <TableColumn fx:id="column_option" prefWidth="124.0" text="Tùy Chọn"/>
+      </columns>
+      <VBox.margin>
+         <Insets left="5.0" right="5.0"/>
+      </VBox.margin>
+   </TableView>
+</VBox>

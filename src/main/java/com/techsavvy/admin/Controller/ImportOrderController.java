@@ -73,7 +73,6 @@ public class ImportOrderController implements Initializable {
         float tt_importDetail = 0;
         for (ImportOrderDetail importOrderDetail : importOrderDetails) {
             tt_importDetail += importOrderDetail.getPrice();
-            System.out.println(importOrderDetail);
         }
         float number = tt_importDetail;
         DecimalFormat decimalFormat = new DecimalFormat("#,###.##");

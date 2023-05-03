@@ -17,6 +17,7 @@ public class Options implements Serializable {
     private float priceImport;
     private int count;
     private Product product;
+    private Discount discount;
 
 
 }

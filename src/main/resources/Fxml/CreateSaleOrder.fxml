@@ -1,183 +1,308 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.AddSaleOrderController">
-   <children>
-      <Pane layoutY="4.0" prefHeight="900.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label alignment="CENTER" layoutX="452.0" layoutY="20.0" prefHeight="46.0" prefWidth="337.0" text="Hóa Đơn Bán Hàng">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="105.0" prefHeight="33.0" prefWidth="135.0" text="Ngày đặt: ">
+<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.AddSaleOrderController">
+   <Label alignment="CENTER" prefHeight="39.0" prefWidth="337.0" text="Hóa Đơn Bán Hàng">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+      <VBox.margin>
+         <Insets left="450.0" top="30.0" />
+      </VBox.margin>
+   </Label>
+   <HBox prefHeight="106.0" prefWidth="1240.0">
+      <VBox.margin>
+         <Insets top="5.0" />
+      </VBox.margin>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="135.0" text="Ngày đặt: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="40.0" top="40.0" />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="CALENDAR" size="18" />
+         </graphic>
+      </Label>
+      <TextField fx:id="date_create" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="33.0" prefWidth="183.0" promptText="Ngày đặt">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </HBox.margin>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="135.0" text="Mã đơn hàng: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="40.0" top="40.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="id_order" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="33.0" prefWidth="187.0" promptText="Mã đơn hàng">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </HBox.margin>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="185.0" text="Hình thức thanh toán: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="40.0" top="40.0" />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="CREDIT_CARD_ALT" size="18" />
+         </graphic>
+      </Label>
+      <ComboBox fx:id="combobox_payment" prefHeight="33.0" prefWidth="193.0" promptText="Chọn Hình Thức Thanh Toán">
+         <HBox.margin>
+            <Insets left="20.0" top="40.0" />
+         </HBox.margin>
+      </ComboBox>
+   </HBox>
+   <HBox prefHeight="122.0" prefWidth="1240.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </VBox.margin>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="152.0" text="Đơn vị vận chuyển: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="30.0" top="40.0" />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="TRUCK" size="18" />
+         </graphic>
+      </Label>
+      <ComboBox fx:id="combobox_ship" prefHeight="33.0" prefWidth="178.0" promptText="Chọn Đơn Vị Vận Chuyển">
+         <HBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </HBox.margin>
+      </ComboBox>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="177.0" text="Tình trạng vận chuyển: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="30.0" top="40.0" />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="TRUCK" size="18" />
+         </graphic>
+      </Label>
+      <ComboBox fx:id="combobox_status_ship" prefHeight="33.0" prefWidth="195.0" promptText="Tình Trạng Vận Chuyển">
+         <HBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </HBox.margin>
+      </ComboBox>
+      <Label alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="193.0" text="Tình trạng thanh toán: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="30.0" top="40.0" />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="CREDIT_CARD_ALT" size="18" />
+         </graphic>
+      </Label>
+      <ComboBox fx:id="combobox_status_payment" prefHeight="33.0" prefWidth="193.0" promptText="Tình Trạng Thanh Toán">
+         <HBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </HBox.margin>
+      </ComboBox>
+   </HBox>
+   <HBox prefHeight="561.0" prefWidth="1240.0">
+      <VBox prefHeight="561.0" prefWidth="722.0">
+         <HBox prefHeight="134.0" prefWidth="722.0">
+            <Label prefHeight="38.0" prefWidth="83.0" text="Ghi Chú: ">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
-            </Label>
-            <TextField alignment="CENTER" editable="false" layoutX="163.0" layoutY="105.0" prefHeight="33.0" prefWidth="163.0" promptText="Ngày đặt">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="155.0" prefHeight="33.0" prefWidth="135.0" text="Đơn vị vận chuyển: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox layoutX="163.0" layoutY="155.0" prefHeight="33.0" prefWidth="163.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="369.0" layoutY="105.0" prefHeight="33.0" prefWidth="135.0" text="Mã đơn hàng: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField alignment="CENTER" editable="false" layoutX="515.0" layoutY="105.0" prefHeight="33.0" prefWidth="172.0" promptText="Mã đơn hàng">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Label alignment="CENTER_RIGHT" layoutX="341.0" layoutY="155.0" prefHeight="33.0" prefWidth="163.0" text="Tình trạng vận chuyển: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField alignment="CENTER" layoutX="515.0" layoutY="155.0" prefHeight="33.0" prefWidth="172.0" promptText="Tình trạng vận chuyển">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Label alignment="CENTER_RIGHT" layoutX="748.0" layoutY="146.0" prefHeight="33.0" prefWidth="163.0" text="Hình thức thanh toán: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox layoutX="926.0" layoutY="105.0" prefHeight="33.0" prefWidth="193.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="748.0" layoutY="105.0" prefHeight="33.0" prefWidth="163.0" text="Tình trạng thanh toán: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox layoutX="926.0" layoutY="146.0" prefHeight="33.0" prefWidth="193.0" />
-            <TextField alignment="CENTER" layoutX="226.0" layoutY="279.0" prefHeight="33.0" prefWidth="254.0" promptText="Nhập mã sản phẩm cần tìm ">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Button layoutX="96.0" layoutY="281.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="108.0" text="Tìm kiếm">
+               <HBox.margin>
+                  <Insets left="10.0" top="50.0" />
+               </HBox.margin>
                <graphic>
-                  <FontAwesomeIconView glyphName="SEARCH" size="20" />
+                  <FontAwesomeIconView glyphName="PENCIL" size="15" />
                </graphic>
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Label alignment="CENTER_RIGHT" layoutX="504.0" layoutY="279.0" prefHeight="33.0" prefWidth="93.0" text="Số lượng : ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
             </Label>
-            <TextField alignment="CENTER" layoutX="597.0" layoutY="279.0" prefHeight="33.0" prefWidth="135.0" promptText="Nhập số lượng">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TableView layoutX="14.0" layoutY="340.0" prefHeight="519.0" prefWidth="772.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="STT" />
-                <TableColumn prefWidth="109.0" text="Mã Sản Phẩm" />
-                  <TableColumn prefWidth="152.0" text="Tên Sản Phẩm" />
-                  <TableColumn prefWidth="107.0" text="Loại" />
-                  <TableColumn prefWidth="97.0" text="Số Lượng" />
-                  <TableColumn prefWidth="137.0" text="Thành Tiền" />
-                  <TableColumn prefWidth="94.0" text="Tùy Chọn" />
-              </columns>
-            </TableView>
-            <Line endX="252.0" layoutX="974.0" layoutY="247.0" startX="-177.0" />
-            <Line endX="17.0" endY="591.0" layoutX="779.0" layoutY="265.0" startX="17.0" startY="-18.0" />
-            <Line endX="17.0" endY="591.0" layoutX="1209.0" layoutY="265.0" startX="17.0" startY="-18.0" />
-            <Line endX="252.0" layoutX="974.0" layoutY="856.0" startX="-177.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="812.0" layoutY="512.0" prefHeight="33.0" prefWidth="119.0" text="Thành TIền: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField alignment="CENTER" layoutX="816.0" layoutY="286.0" prefHeight="33.0" prefWidth="254.0" promptText="Tên Khách Hàng">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField alignment="CENTER" layoutX="816.0" layoutY="328.0" prefHeight="33.0" prefWidth="254.0" promptText="Số Điện Thoại">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField alignment="CENTER" layoutX="812.0" layoutY="378.0" prefHeight="33.0" prefWidth="399.0" promptText="Địa chỉ">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Button layoutX="1082.0" layoutY="286.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="93.0" text="Chi Tiết">
+            <TextArea fx:id="note_txt" prefHeight="126.0" prefWidth="616.0" promptText="Thêm ghi chú ...">
+               <HBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </HBox.margin>
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
-            </Button>
-            <Button layoutX="1082.0" layoutY="328.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="93.0" text="Kiểm Tra">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Label alignment="CENTER_RIGHT" layoutX="816.0" layoutY="528.0" prefHeight="33.0" prefWidth="119.0" text="Khuyến mại: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="816.0" layoutY="574.0" prefHeight="33.0" prefWidth="119.0" text="Tổng Thành Tiền: ">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField alignment="CENTER" layoutX="943.0" layoutY="488.0" prefHeight="33.0" prefWidth="254.0" promptText="Thành tiền">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField alignment="CENTER" layoutX="943.0" layoutY="528.0" prefHeight="33.0" prefWidth="254.0" promptText="Nhập mã khuyến mại nếu có">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField alignment="CENTER" layoutX="943.0" layoutY="574.0" prefHeight="33.0" prefWidth="254.0" promptText="Tổng thành tiền">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Button layoutX="829.0" layoutY="713.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Tạo Hóa Đơn">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button layoutX="1047.0" layoutY="713.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="144.0" text="Tạo Và In Hóa Đơn">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button layoutX="957.0" layoutY="785.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Hủy">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-         </children>
+            </TextArea>
+         </HBox>
+         <Button fx:id="add_product_sale_btn" mnemonicParsing="false" prefHeight="38.0" prefWidth="208.0" text="Thêm Sản Phẩm Bán">
+            <graphic>
+               <FontAwesomeIconView fill="#15b264" glyphName="PLUS" size="20" />
+            </graphic>
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+            <VBox.margin>
+               <Insets left="350.0" top="10.0" />
+            </VBox.margin>
+         </Button>
+         <TableView fx:id="table_product_sale" prefHeight="355.0" prefWidth="712.0">
+            <columns>
+               <TableColumn fx:id="column_stt" prefWidth="75.0" text="STT" />
+               <TableColumn fx:id="column_id_product" prefWidth="99.0" text="Mã Sản Phẩm" />
+               <TableColumn fx:id="column_name" prefWidth="125.0" text="Tên Sản Phẩm" />
+               <TableColumn fx:id="column_type" prefWidth="94.0" text="Loại" />
+               <TableColumn fx:id="column_count" prefWidth="79.0" text="Số Lượng" />
+               <TableColumn fx:id="column_price" prefWidth="117.0" text="Giá Bán" />
+               <TableColumn fx:id="column_options" prefWidth="121.0" text="Tùy Chọn" />
+            </columns>
+            <VBox.margin>
+               <Insets left="5.0" right="5.0" top="10.0" />
+            </VBox.margin>
+         </TableView>
+      </VBox>
+      <Pane  prefHeight="561.0" prefWidth="512.0">
+         <Line endX="348.0" layoutX="158.0" startX="-142.0" />
+         <TextField fx:id="name_customer_txt" alignment="CENTER" layoutX="48.0" layoutY="38.0" prefHeight="33.0" prefWidth="254.0" promptText="Tên Khách Hàng">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </TextField>
+         <Button fx:id="infor_btn" layoutX="315.0" layoutY="38.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="142.0" text="Xem Thông Tin">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView glyphName="ADDRESS_CARD" size="20" />
+            </graphic>
+         </Button>
+         <TextField fx:id="phone_txt" alignment="CENTER" layoutX="48.0" layoutY="95.0" prefHeight="33.0" prefWidth="254.0" promptText="Số Điện Thoại">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </TextField>
+         <Button fx:id="check_customer_btn" layoutX="315.0" layoutY="95.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="93.0" text="Kiểm Tra">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#ee3615" glyphName="CHECK" size="15" />
+            </graphic>
+         </Button>
+         <Label alignment="CENTER_RIGHT" layoutX="55.0" layoutY="231.0" prefHeight="33.0" prefWidth="120.0" text="Thành Tiền: ">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER_RIGHT" layoutX="68.0" layoutY="314.0" prefHeight="33.0" prefWidth="120.0" text="Khuyến mại: ">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER_RIGHT" layoutX="63.0" layoutY="362.0" prefHeight="33.0" prefWidth="130.0" text="Tổng Thành Tiền: ">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <TextField fx:id="tt_1_txt" alignment="CENTER" layoutX="204.0" layoutY="231.0" prefHeight="33.0" prefWidth="254.0" promptText="Thành tiền">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </TextField>
+         <TextField fx:id="discount_txt" alignment="CENTER" editable="false" layoutX="210.0" layoutY="314.0" prefHeight="33.0" prefWidth="183.0" promptText="Voucher">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </TextField>
+         <TextField fx:id="tt_2_txt" alignment="CENTER" layoutX="213.0" layoutY="359.0" prefHeight="39.0" prefWidth="284.0" promptText="Tổng thành tiền">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </TextField>
+         <Button fx:id="create_btn" layoutX="341.0" layoutY="435.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Tạo Hóa Đơn">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#2dc369" glyphName="PLUS_CIRCLE" selectionFill="#0ed36a" size="18" />
+            </graphic>
+         </Button>
+         <Button fx:id="create_and_print_btn" layoutX="107.0" layoutY="435.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="163.0" text="Tạo Và In Hóa Đơn">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#2dc369" glyphName="PLUS_CIRCLE" selectionFill="#0ed36a" size="18" />
+            </graphic>
+         </Button>
+         <Button layoutX="235.0" layoutY="493.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Hủy">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#e11414" glyphName="TIMES" size="20" />
+            </graphic>
+         </Button>
+         <TextField fx:id="address_customer_txt" alignment="CENTER" layoutX="35.0" layoutY="173.0" prefHeight="40.0" prefWidth="453.0" promptText="Địa chỉ">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </TextField>
+         <Line endX="-64.0" endY="539.0" layoutX="79.0" layoutY="21.0" startX="-64.0" startY="-21.0" />
+         <Line endX="348.0" layoutX="158.0" layoutY="560.0" startX="-142.0" />
+         <Line endX="-64.0" endY="539.0" layoutX="570.0" layoutY="21.0" startX="-64.0" startY="-21.0" />
+         <Button fx:id="add_customer_btn" layoutX="418.0" layoutY="95.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="80.0" text="Thêm">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#1c9a48" glyphName="PLUS_CIRCLE" size="15" />
+            </graphic>
+         </Button>
+         <Label fx:id="error_phone_lbl" alignment="CENTER" layoutX="48.0" layoutY="128.0" prefHeight="33.0" prefWidth="254.0" text="Label" textFill="#e81818" visible="false">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER_RIGHT" layoutX="60.0" layoutY="271.0" prefHeight="33.0" prefWidth="120.0" text="Phí Vận Chuyển: ">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <TextField fx:id="price_ship_txt" alignment="CENTER" layoutX="209.0" layoutY="271.0" prefHeight="33.0" prefWidth="254.0" promptText="Phí Vận Chuyển">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </TextField>
+         <Button fx:id="add_voucher_btn" layoutX="403.0" layoutY="313.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="93.0" text="Voucher">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+            <graphic>
+               <FontAwesomeIconView fill="#2dc369" glyphName="PLUS_CIRCLE" selectionFill="#0ed36a" size="18" />
+            </graphic>
+         </Button>
       </Pane>
-   </children>
-</AnchorPane>
+   </HBox>
+</VBox>

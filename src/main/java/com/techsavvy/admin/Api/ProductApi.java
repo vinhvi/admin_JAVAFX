@@ -13,9 +13,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,5 +176,37 @@ public class ProductApi {
 
         return specifications;
     }
+
+    public List<Product> getProductByIdOrName(String key) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/getByIdOrName/" + URLEncoder.encode(key, StandardCharsets.UTF_8);
+        String token = localStorage.getTokenInLocal();
+        List<Product> productList = new ArrayList<>();
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            // Tạo request HTTP GET tới API
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+
+            // Gửi request và lấy response trả về
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Xử lý response nếu response status code là 200 OK
+            if (response.statusCode() == 200) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                productList = objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class));
+            } else {
+                System.out.println("API getOptionsByProduct error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
 
 }

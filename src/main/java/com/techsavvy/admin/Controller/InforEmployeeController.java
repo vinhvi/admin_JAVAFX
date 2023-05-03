@@ -51,7 +51,7 @@ public class InforEmployeeController implements Initializable {
     public CheckBox checkbox_2;
     public CheckBox checkbox_3;
 
-    public InforEmployeeController() throws IOException, ClassNotFoundException {
+    public InforEmployeeController() {
     }
 
     @Override
@@ -94,7 +94,6 @@ public class InforEmployeeController implements Initializable {
     }
 
     public void setInforEmployee(String maNV) throws IOException, ClassNotFoundException {
-
         getEmployee = employeeApi.getById(maNV);
         maNV_txt.setText(getEmployee.getId());
         firstName_txt.setText(getEmployee.getFirstName());

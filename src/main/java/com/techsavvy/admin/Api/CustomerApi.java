@@ -1,0 +1,171 @@
+package com.techsavvy.admin.Api;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techsavvy.admin.Models.GetIpAddress;
+import com.techsavvy.admin.Models.LocalStorage;
+import com.techsavvy.admin.entity.Customer;
+import org.springframework.http.HttpStatus;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+public class CustomerApi {
+
+    public final GetIpAddress getIpAddress = new GetIpAddress();
+    private final String ipAddress = "http://" + getIpAddress.getIpAddressServer() + ":8521/api/customer";
+    private final LocalStorage localStorage = new LocalStorage();
+
+
+    public boolean addCustomer(Customer customer) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/add";
+        String token = localStorage.getTokenInLocal();
+        boolean isUpdate;
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(customer);
+        // Send POST request to server
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            // Update successful
+            // Update failed
+            isUpdate = response.statusCode() == HttpStatus.OK.value();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return isUpdate;
+    }
+
+
+    public Customer getCustomerByPhone(String phone) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/getByPhone/" + phone;
+        String token = localStorage.getTokenInLocal();
+        Customer customer = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            // Tạo request HTTP GET tới API
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+
+            // Gửi request và lấy response trả về
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Xử lý response nếu response status code là 200 OK
+            if (response.statusCode() == 200) {
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+
+                customer = mapper.readValue(response.body(), mapper.getTypeFactory().constructType(Customer.class));
+            } else {
+                System.out.println("API getOptionsByProduct error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return customer;
+    }
+
+    public Customer getCustomerByEmail(String email) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/getByEmail/" + email;
+        String token = localStorage.getTokenInLocal();
+        Customer customer = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            // Tạo request HTTP GET tới API
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+
+            // Gửi request và lấy response trả về
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Xử lý response nếu response status code là 200 OK
+            if (response.statusCode() == 200) {
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+
+                customer = mapper.readValue(response.body(), mapper.getTypeFactory().constructType(Customer.class));
+            } else {
+                System.out.println("API getOptionsByProduct error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return customer;
+    }
+
+    public String getRandomId() throws IOException, ClassNotFoundException {
+        String lh = "";
+        String token = localStorage.getTokenInLocal();
+        String api = ipAddress + "/randomId";
+        URL url = new URL(api);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + token);
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            // Đọc phản hồi từ API
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String response = in.readLine();
+            in.close();
+
+            // Xử lý phản hồi và trả về kết quả phù hợp
+            lh = response;
+        } else {
+            // Xử lý lỗi
+            System.out.println("Lỗi kết nối đến API getRandomLH: " + responseCode);
+        }
+
+        return lh;
+    }
+
+    public List<Customer> getListCustomer() throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/getListCustomer";
+        String token = "Bearer " + localStorage.getTokenInLocal();
+        URL obj = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Authorization", token);
+        InputStream inputStream = connection.getInputStream();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        mapper.setDateFormat(dateFormat);
+        List<Customer> customerList = mapper.readValue(inputStream, new TypeReference<>() {
+        });
+        inputStream.close();
+        return customerList;
+    }
+
+}
