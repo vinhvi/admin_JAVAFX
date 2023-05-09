@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -78,13 +77,9 @@ public class InforQuestionController implements Initializable {
     }
 
     private void replyQuestion() throws IOException, ClassNotFoundException {
-        Question newQuestion = this.question;
-        LocalDate dateValue = datePicker.getValue();
-        Instant instant = Instant.from(dateValue.atStartOfDay(ZoneId.systemDefault()));
-        Date dateQuestion = Date.from(instant);
-        newQuestion.setQuestionDate(dateQuestion);
-        newQuestion.setReply(true);
-        boolean b = questionApi.updateQuestion(newQuestion);
+        Question newQuestion = new Question();
+        newQuestion.setId(this.question.getId());
+        boolean b = questionApi.updateQuestion(newQuestion.getId());
         if (!b) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
@@ -98,7 +93,6 @@ public class InforQuestionController implements Initializable {
         String email = localStorage.getEmailEmployeeInLocal();
         Account account = accountApi.getByEmail(email);
         answer.setAccount(account);
-        System.out.println(question);
         boolean a = answerApi.createAnswer(answer);
         if (!a) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

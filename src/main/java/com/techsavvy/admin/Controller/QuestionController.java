@@ -70,7 +70,15 @@ public class QuestionController implements Initializable {
 
     private void getListQuestion() throws IOException, ClassNotFoundException {
         List<Question> questions = questionApi.getQuestionByReply();
-        setTable_question(questions);
+        if (!questions.isEmpty()) {
+            setTable_question(questions);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Chưa có câu hỏi nào !");
+            alert.show();
+        }
+
     }
 
     private void setTable_question(List<Question> questionList) {
@@ -150,7 +158,7 @@ public class QuestionController implements Initializable {
                             }
                             Stage stage = new Stage();
                             stage.setScene(new Scene(root));
-                            stage.show();
+                            stage.showAndWait();
                             try {
                                 getListQuestion();
                             } catch (IOException | ClassNotFoundException e) {

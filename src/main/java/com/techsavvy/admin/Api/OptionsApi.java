@@ -80,13 +80,9 @@ public class OptionsApi {
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == HttpStatus.OK.value()) {
-                // Update successful
-                isUpdate = true;
-            } else {
-                // Update failed
-                isUpdate = false;
-            }
+            // Update successful
+            // Update failed
+            isUpdate = response.statusCode() == HttpStatus.OK.value();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

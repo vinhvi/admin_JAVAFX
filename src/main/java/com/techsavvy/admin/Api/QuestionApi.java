@@ -2,7 +2,6 @@ package com.techsavvy.admin.Api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.entity.Question;
@@ -25,8 +24,8 @@ public class QuestionApi {
     private final LocalStorage localStorage = new LocalStorage();
 
 
-    public boolean updateQuestion(Question question) throws IOException, ClassNotFoundException {
-        String url = ipAddress + "/createAnswer";
+    public boolean updateQuestion(int id) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/updateQuestion/" + id;
         String token = localStorage.getTokenInLocal();
         boolean isUpdate;
         // Send POST request to server
@@ -35,7 +34,7 @@ public class QuestionApi {
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + token)
-                .POST(HttpRequest.BodyPublishers.ofString(new Gson().toJson(question)))
+                .POST(HttpRequest.BodyPublishers.ofString(""))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
