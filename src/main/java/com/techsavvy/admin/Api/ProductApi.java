@@ -9,7 +9,10 @@ import com.techsavvy.admin.entity.Product;
 import com.techsavvy.admin.entity.Specifications;
 import org.springframework.http.HttpStatus;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -18,6 +21,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +117,10 @@ public class ProductApi {
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Authorization", token);
         InputStream inputStream = connection.getInputStream();
-        List<Product> productList = new ObjectMapper().readValue(inputStream, new TypeReference<>() {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        mapper.setDateFormat(dateFormat);
+        List<Product> productList = mapper.readValue(inputStream, new TypeReference<>() {
         });
         inputStream.close();
         return productList;
@@ -206,6 +213,39 @@ public class ProductApi {
         }
 
         return productList;
+    }
+
+    public Product getProductById(String ma) throws IOException, ClassNotFoundException {
+        String url = ipAddress + "/getProductById/" + ma;
+        String token = localStorage.getTokenInLocal();
+        Product product = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            // Tạo request HTTP GET tới API
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+
+            // Gửi request và lấy response trả về
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Xử lý response nếu response status code là 200 OK
+            if (response.statusCode() == 200) {
+
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+                product = mapper.readValue(response.body(), mapper.getTypeFactory().constructType(Product.class));
+            } else {
+                System.out.println("API getOptionsByProduct error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 
 

@@ -74,35 +74,12 @@ public class EvaluateApi {
 
         return evaluate;
     }
-
-    public boolean deleteById(int id) throws IOException, ClassNotFoundException {
-        String url = ipAddress + "/deleteById/" + id;
-        String token = localStorage.getTokenInLocal();
-        boolean check = false;
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-
-            // Tạo request HTTP GET tới API
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + token)
-                    .GET()
-                    .build();
-
-            // Gửi request và lấy response trả về
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // Xử lý response nếu response status code là 200 OK
-            if (response.statusCode() == 200) {
-                check = true;
-            } else {
-                System.out.println("API getOptionsByProduct error: " + response.statusCode());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return check;
+    public void deleteEvaluate(int id) throws IOException, InterruptedException, ClassNotFoundException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = "Bearer " + localStorage.getTokenInLocal();
+        HttpRequest request = HttpRequest.newBuilder().header("Authorization", token).uri(URI.create(ipAddress + "/deleteById/" + id)).DELETE().build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        response.statusCode();
     }
 
 }

@@ -1,7 +1,5 @@
 package com.techsavvy.admin.Models;
 
-import com.techsavvy.admin.entity.Product;
-
 import java.io.*;
 
 public class LocalStorage {
@@ -43,23 +41,23 @@ public class LocalStorage {
 //        System.out.println("employee: " + employee);
         return maNV;
     }
-    public  void saveProduct(Product product) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("product_import"))) {
-            oos.writeObject(product);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    public void saveEmailEmployee(String email) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream("email_employee.eer");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(email);
+        out.close();
+        fileOut.close();
+        System.out.println("Đã lưu " + email);
     }
 
-    public  Product loadProduct() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("product_import"))) {
-            return (Product) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getEmailEmployeeInLocal() throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream("email_employee.eer");
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        String email = (String) in.readObject();
+        in.close();
+        fileIn.close();
+//        System.out.println("employee: " + employee);
+        return email;
     }
-
-
-
 }

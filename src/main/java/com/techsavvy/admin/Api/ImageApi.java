@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +82,10 @@ public class ImageApi {
 
             // Xử lý response nếu response status code là 200 OK
             if (response.statusCode() == 200) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                images = objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Image.class));
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+                images = mapper.readValue(response.body(), mapper.getTypeFactory().constructCollectionType(List.class, Image.class));
             } else {
                 System.out.println("API getImageByProduct error: " + response.body());
             }

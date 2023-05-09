@@ -23,7 +23,7 @@ public class LoginController implements Initializable {
     public TextField name_txt;
     public PasswordField password_txt;
 
-    public LoginController() throws IOException, ClassNotFoundException {
+    public LoginController() {
     }
 
     @Override
@@ -54,6 +54,7 @@ public class LoginController implements Initializable {
             Employee employee = employeeApi.getByEmail(name_txt.getText());
             if (employee != null) {
                 localStorage.saveEmployee(employee.getId());
+                localStorage.saveEmailEmployee(employee.getEmail());
                 Stage stage = (Stage) error_lbl.getScene().getWindow();
                 Model.getInstance().getViewFactory().closeStage(stage);
                 Model.getInstance().getViewFactory().showViews();

@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,11 +17,13 @@ public class ViewFactory {
     private AnchorPane listImportOrder;
     private VBox createImportOrder;
     private VBox saleOrder;
-    private VBox createSaleOrder;
+    private ScrollPane createSaleOrder;
     private VBox listProduct;
-    private VBox listEmployee;
+    private ScrollPane listEmployee;
     private VBox listSupplier;
     private VBox addSupplier;
+    private VBox listDiscount;
+    private VBox listQuestions;
 
     public ViewFactory() {
         this.selectMenuItem = new SimpleStringProperty("");
@@ -108,7 +111,7 @@ public class ViewFactory {
         return saleOrder;
     }
 
-    public VBox getCreateSaleOrder() {
+    public ScrollPane getCreateSaleOrder() {
         if (createSaleOrder == null) {
             try {
                 createSaleOrder = new FXMLLoader(getClass().getResource("/Fxml/CreateSaleOrder.fxml")).load();
@@ -129,7 +132,8 @@ public class ViewFactory {
         }
         return listProduct;
     }
-    public VBox getListEmployee() {
+
+    public ScrollPane getListEmployee() {
         if (listEmployee == null) {
             try {
                 listEmployee = new FXMLLoader(getClass().getResource("/Fxml/ListEmployee.fxml")).load();
@@ -139,6 +143,7 @@ public class ViewFactory {
         }
         return listEmployee;
     }
+
     public VBox getListSupplier() {
         if (listSupplier == null) {
             try {
@@ -151,14 +156,36 @@ public class ViewFactory {
     }
 
     public VBox getAddSupplier(){
-        if (addSupplier==null){
+        if (addSupplier == null) {
             try {
                 addSupplier = new FXMLLoader(getClass().getResource("/Fxml/AddSupplier.fxml")).load();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return addSupplier;
+    }
+
+    public VBox getListDiscount() {
+        if (listDiscount == null) {
+            try {
+                listDiscount = new FXMLLoader(getClass().getResource("/Fxml/ListDiscount.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listDiscount;
+    }
+
+    public VBox getListQuestions() {
+        if (listQuestions == null) {
+            try {
+                listQuestions = new FXMLLoader(getClass().getResource("/Fxml/ListQuestion.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listQuestions;
     }
 
     public void closeStage(Stage stage) {

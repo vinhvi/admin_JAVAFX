@@ -11,7 +11,9 @@ import java.util.Date;
 public class Discount {
     private String id;
     private String content;
+    private String typeDiscount;
     private Date start;
     private Date end;
     private float discountForProduct;
+    private boolean enable;
 }

@@ -25,8 +25,10 @@ public class MenuController implements Initializable {
     public Button listemployee_btn;
     public Label nameNV_txt;
     public Label role_txt;
+    public Button listDiscount_btn;
+    public Button question_btn;
 
-    public MenuController() throws IOException, ClassNotFoundException {
+    public MenuController() {
     }
 
     @Override
@@ -47,6 +49,8 @@ public class MenuController implements Initializable {
         listproduct_btn.setOnAction(actionEvent -> onListProduct());
         listemployee_btn.setOnAction(actionEvent -> onListEmployee());
         listsupplier_btn.setOnAction(actionEvent -> onListSupplier());
+        listDiscount_btn.setOnAction(actionEvent -> onListDiscount());
+        question_btn.setOnAction(actionEvent -> onListQuestions());
     }
 
     private void getInfor() throws IOException, ClassNotFoundException {
@@ -88,5 +92,13 @@ public class MenuController implements Initializable {
 
     private void onListSupplier() {
         Model.getInstance().getViewFactory().getSelectMenuItem().set("ListSupplier");
+    }
+
+    private void onListDiscount() {
+        Model.getInstance().getViewFactory().getSelectMenuItem().set("ListDiscount");
+    }
+
+    private void onListQuestions() {
+        Model.getInstance().getViewFactory().getSelectMenuItem().set("ListQuestions");
     }
 }

@@ -3,6 +3,8 @@ package com.techsavvy.admin.entity;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @Getter
@@ -17,7 +19,7 @@ public class Options implements Serializable {
     private float priceImport;
     private int count;
     private Product product;
-    private Discount discount;
+    private Set<Discount> discounts = new LinkedHashSet<>();
 
 
 }

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.InforDiscountController">
+   <Label fx:id="lbl_title" alignment="CENTER" prefHeight="50.0" prefWidth="356.0" text="Thông Tin Mã Khuyến Mại">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+      <VBox.margin>
+         <Insets left="450.0" top="10.0" />
+      </VBox.margin>
+   </Label>
+   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="109.0" text="Mã Khuyến Mại: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="id_discount_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="149.0" promptText="Mã Khuyến Mại">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="109.0" text="Ngày Bắt Đầu:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <DatePicker fx:id="start_date" prefHeight="31.0" prefWidth="174.0" promptText="Ngày Bắt Đầu">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </DatePicker>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="109.0" text="Ngày Kết Thúc:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <DatePicker fx:id="end_date" prefHeight="31.0" prefWidth="174.0" promptText="Ngày Kết Thúc">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </DatePicker>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="84.0" prefWidth="1240.0">
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="161.0" text="Trạng Thái Khuyến Mại: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="combobox_status" prefHeight="35.0" prefWidth="157.0">
+         <HBox.margin>
+            <Insets left="10.0" right="50.0" />
+         </HBox.margin>
+      </ComboBox>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="109.0" text="Giảm: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="value_discount_txt" alignment="CENTER" prefHeight="35.0" prefWidth="178.0" promptText="Giảm">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </TextField>
+      <ComboBox fx:id="combobox_type" prefHeight="35.0" prefWidth="86.0" promptText="type">
+         <HBox.margin>
+            <Insets left="5.0" />
+         </HBox.margin>
+      </ComboBox>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="114.0" prefWidth="1240.0">
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="31.0" prefWidth="109.0" text="Nội Dung: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="content_discount_txt" prefHeight="104.0" prefWidth="758.0" promptText="Nội dung của khuyến mại...">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets bottom="5.0" left="10.0" top="5.0" />
+         </HBox.margin>
+      </TextArea>
+      <Button fx:id="confirm_btn" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" text="Xác Nhận">
+         <graphic>
+            <FontAwesomeIconView fill="#11dd63" glyphName="CHECK_CIRCLE" size="20" />
+         </graphic>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Button>
+      <Button fx:id="cancel_btn" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" text="Hủy">
+         <graphic>
+            <FontAwesomeIconView fill="#dd0f0f" glyphName="TIMES_CIRCLE" size="20" />
+         </graphic>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="418.0" prefWidth="1240.0">
+      <VBox alignment="CENTER" prefHeight="418.0" prefWidth="578.0">
+         <Label alignment="CENTER" prefHeight="42.0" prefWidth="285.0" text="Danh Sách Sản Phẩm  Áp Dụng Khuyến Mại">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <TableView fx:id="table_product" prefHeight="350.0" prefWidth="100.0">
+            <columns>
+               <TableColumn fx:id="column_stt_product" prefWidth="62.0" text="STT" />
+               <TableColumn fx:id="column_id_product" prefWidth="108.0" text="Mã Sản Phẩm" />
+               <TableColumn fx:id="column_name_product" prefWidth="95.0" text="Tên Sản Phẩm" />
+               <TableColumn fx:id="column_lh_product" prefWidth="95.0" text="Lô Hàng" />
+               <TableColumn fx:id="column_date_product" prefWidth="105.0" text="Ngày Nhập" />
+               <TableColumn fx:id="column_option_product" prefWidth="112.0" text="Tùy Chọn" />
+            </columns>
+         </TableView>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="418.0" prefWidth="643.0">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <Label alignment="CENTER" prefHeight="42.0" prefWidth="335.0" text="Danh Sách Phiên Bản Sản Phẩm Áp Dụng Khuyến Mại">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <TableView fx:id="table_options" prefHeight="350.0" prefWidth="100.0">
+            <columns>
+               <TableColumn fx:id="column_stt_option" prefWidth="52.0" text="STT" />
+               <TableColumn fx:id="column_name_option" prefWidth="103.0" text="Tên Phiên Bản" />
+               <TableColumn fx:id="column_color_option" prefWidth="92.0" text="Màu" />
+               <TableColumn fx:id="column_price_option" prefWidth="106.0" text="Giá Bán" />
+               <TableColumn fx:id="column_count_option" prefWidth="85.0" text="Số Lượng" />
+               <TableColumn fx:id="column_status_option" prefWidth="105.0" text="Áp Dụng" />
+               <TableColumn fx:id="column_option" prefWidth="99.0" text="Tùy Chọn" />
+            </columns>
+         </TableView>
+      </VBox>
+   </HBox>
+</VBox>

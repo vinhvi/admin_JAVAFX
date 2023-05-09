@@ -232,9 +232,11 @@ public class UpdateProductController implements Initializable {
 
     public void setDataInforProduct(Product product) throws IOException, ClassNotFoundException {
         this.product = product;
-        System.out.println(product);
         specificationsList = productApi.getSpecifiByProduct(product.getId());
-        setTableSpecifications(specificationsList);
+        System.out.println(specifications);
+        if (specificationsList != null) {
+            setTableSpecifications(specificationsList);
+        }
         imageList = imageApi.getImageByProduct(product.getId());
         setTableImage(imageList);
         id_Product.setText(product.getId());
@@ -465,6 +467,7 @@ public class UpdateProductController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Thông báo");
             alert.setHeaderText("xảy ra lỗi khi update product!!");
+            alert.show();
             System.out.println(product);
         }
         return isUpdate;
@@ -473,13 +476,21 @@ public class UpdateProductController implements Initializable {
 
     private void getListEvaluate() throws IOException, ClassNotFoundException {
         List<Evaluate> evaluateList = evaluateApi.getListEvaluateByProduct(product.getId());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/ListEvaluate.fxml"));
-        Parent root = fxmlLoader.load();
-        ListEvaluateController controller = fxmlLoader.getController();
-        controller.setTable_evaluate(evaluateList);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        if (evaluateList != null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/ListEvaluate.fxml"));
+            Parent root = fxmlLoader.load();
+            ListEvaluateController controller = fxmlLoader.getController();
+            controller.setTable_evaluate(evaluateList);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Sản Phẩm chưa có đánh giá nào !");
+            alert.show();
+        }
+
     }
 }
 

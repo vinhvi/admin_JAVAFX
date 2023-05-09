@@ -43,12 +43,13 @@
          <TableColumn fx:id="column_stt" prefWidth="85.0" text="STT" />
          <TableColumn fx:id="column_ma" prefWidth="149.0" text="Mã sản phẩm" />
          <TableColumn fx:id="column_nameProduct" prefWidth="193.0" text="Tên sản phẩm" />
-         <TableColumn fx:id="column_type" prefWidth="134.0" text="Loại" />
-         <TableColumn fx:id="column_count" prefWidth="147.0" text="Số lượng" />
-         <TableColumn fx:id="column_LH" minWidth="0.0" prefWidth="153.0" text="Lô Hàng Số" />
-         <TableColumn fx:id="column_countOptions" prefWidth="107.0" text="Số Phiên Bản" />
-         <TableColumn fx:id="column_evaluate" prefWidth="154.0" text="Đánh Giá" />
-         <TableColumn fx:id="column_options" minWidth="0.0" prefWidth="107.0" text="Tùy chọn" />
+         <TableColumn fx:id="column_type" prefWidth="110.0" text="Loại" />
+         <TableColumn fx:id="column_count" prefWidth="112.0" text="Số lượng" />
+         <TableColumn fx:id="column_LH" minWidth="0.0" prefWidth="100.0" text="Lô Hàng Số" />
+         <TableColumn fx:id="column_countOptions" prefWidth="121.0" text="Số Phiên Bản" />
+         <TableColumn fx:id="column_date" minWidth="0.0" prefWidth="145.0" text="Ngày Thêm" />
+         <TableColumn fx:id="column_evaluate" minWidth="0.0" prefWidth="94.0" text="Đánh Giá" />
+         <TableColumn fx:id="column_options" maxWidth="151.0" minWidth="0.0" prefWidth="120.0" text="Tùy chọn" />
       </columns>
       <VBox.margin>
          <Insets left="5.0" right="5.0" />

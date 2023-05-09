@@ -159,6 +159,7 @@ public class InforCustomerController implements Initializable {
             address.setDistrict(district_txt.getText());
             address.setWards(wards_txt.getText());
             address.setStreet(street_txt.getText());
+
             newCustomer.setAddress(address);
 
             //Lấy rồi chuyển về date cho ngày vào làm

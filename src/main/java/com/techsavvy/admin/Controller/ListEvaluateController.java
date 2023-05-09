@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ListEvaluateController implements Initializable {
     private final CustomerApi customerApi = new CustomerApi();
@@ -39,26 +36,56 @@ public class ListEvaluateController implements Initializable {
     public TableColumn<Evaluate, Void> column_option;
     private Customer customer;
 
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+    private void getInforCustomer(String email) throws IOException, ClassNotFoundException {
+        Customer customer = customerApi.getCustomerByEmail(email);
+        if (customer != null) {
+            setCustomer(customer);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Không tìm thấy khách hàng " + email);
+            alert.show();
+        }
+    }
+
     public void setTable_evaluate(List<Evaluate> evaluateList) {
 
         column_stt.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_evaluate.getItems().indexOf(stt.getValue()) + 1));
-        column_id.setCellValueFactory(column -> {
-            String id = "";
+        column_email.setCellValueFactory(column -> {
+            String email = column.getValue().getAccount().getEmail();
+            String email_customer = "";
             try {
-                this.customer = customerApi.getCustomerByEmail(column.getValue().getAccount().getEmail());
-                id = customer.getId();
-                return new SimpleStringProperty(id);
+                getInforCustomer(email);
+                if (customer != null) {
+                    email_customer = customer.getEmail();
+                }
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            return new SimpleStringProperty(email_customer);
+        });
+        column_id.setCellValueFactory(column -> {
+            String id = "";
+            if (customer != null) {
+                id = customer.getId();
+            }
+            return new SimpleStringProperty(id);
+
         });
         column_name.setCellValueFactory(column -> {
-            String name = customer.getFirstName() + " " + customer.getLastName();
+            String name = "";
+            if (customer != null) {
+                name = customer.getFirstName() + " " + customer.getLastName();
+            }
             return new SimpleStringProperty(name);
         });
         column_date.setCellValueFactory(column -> {
@@ -83,31 +110,32 @@ public class ListEvaluateController implements Initializable {
             return new SimpleStringProperty(phone);
         });
         column_value.setCellValueFactory(column -> {
-            String value = column.getValue() + "/5 ⭐";
+            String value = column.getValue().getValue() + "/5⭐";
             return new SimpleStringProperty(value);
         });
         Callback<TableColumn<Evaluate, Void>, TableCell<Evaluate, Void>> cellCallback = new Callback<>() {
             @Override
             public TableCell<Evaluate, Void> call(TableColumn<Evaluate, Void> productVoidTableColumn) {
                 return new TableCell<>() {
-                    private final Button inforImportOrder_btn = new Button("Xem thông tin");
+                    private final Button inforImportOrder_btn = new Button("Xóa Đánh Giá");
 
                     {
                         inforImportOrder_btn.setOnAction(actionEvent -> {
                             Evaluate data = getTableView().getItems().get(getIndex());
-                            try {
-                                boolean check = evaluateApi.deleteById(data.getId());
-                                if (check) {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Bạn có muốn xóa đánh giá này ?");
+                            alert.setHeaderText(null);
+                            Optional<ButtonType> optionalButtonType = alert.showAndWait();
+                            if (optionalButtonType.isPresent()) {
+                                try {
+                                    evaluateApi.deleteEvaluate(data.getId());
                                     evaluateList.remove(data);
                                     ObservableList<Evaluate> evaluateObservableList = FXCollections.observableArrayList(evaluateList);
                                     table_evaluate.setItems(evaluateObservableList);
-                                } else {
-                                    System.out.println("Lỗi !!");
+                                } catch (IOException | ClassNotFoundException | InterruptedException e) {
+                                    throw new RuntimeException(e);
                                 }
-                            } catch (IOException | ClassNotFoundException e) {
-                                throw new RuntimeException(e);
                             }
-
                         });
                     }
 

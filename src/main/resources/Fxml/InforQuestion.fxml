@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="701.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.InforQuestionController">
+   <Label alignment="CENTER" prefHeight="44.0" prefWidth="243.0" text="Câu  Hỏi">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+      <VBox.margin>
+         <Insets left="500.0" top="20.0" />
+      </VBox.margin>
+   </Label>
+   <HBox alignment="CENTER" prefHeight="108.0" prefWidth="1230.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" top="50.0" />
+      </VBox.margin>
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="121.0" text="Tên Khách Hàng:  ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="name_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Tên Khách Hàng">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="107.0" text="Email: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="email_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Email">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="107.0" text="Số Điện Thoại: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="phone_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Số Điện Thoại">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="108.0" prefWidth="1230.0">
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="121.0" text="Mã Sản Phẩm:  ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="id_product_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Mã Sản Phẩm">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="107.0" text="Tên Sản Phẩm:  ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="name_product_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Tên Sản Phẩm">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="107.0" text="Lô Hàng">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="50.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="loHang_txt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="31.0" prefWidth="194.0" promptText="Lô Hàng">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </TextField>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="130.0" prefWidth="1240.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" top="20.0" />
+      </VBox.margin>
+      <Label alignment="CENTER" prefHeight="31.0" prefWidth="128.0" text="Nội Dung Câu Hỏi: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="content_txt" prefHeight="120.0" prefWidth="440.0" promptText="Nội dung...">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets right="140.0" />
+         </HBox.margin>
+      </TextArea>
+      <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="107.0" text="Ngày Hỏi: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Label>
+      <DatePicker fx:id="datePicker" editable="false" prefHeight="31.0" prefWidth="174.0" promptText="Ngày Hỏi" />
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="138.0" prefWidth="1230.0">
+      <VBox.margin>
+         <Insets left="10.0" right="10.0" top="20.0" />
+      </VBox.margin>
+      <Button fx:id="reply_btn" mnemonicParsing="false" prefHeight="32.0" prefWidth="103.0" text="Trả Lời">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView fill="#1876d9" glyphName="REPLY" size="20" />
+         </graphic>
+      </Button>
+      <TextArea fx:id="reply_txt" prefHeight="139.0" prefWidth="543.0" promptText="Trả lời ...">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </TextArea>
+   </HBox>
+</VBox>

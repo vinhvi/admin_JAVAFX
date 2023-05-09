@@ -3,6 +3,7 @@ package com.techsavvy.admin.entity;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Getter
@@ -14,6 +15,7 @@ public class Product implements Serializable {
     private Type type;
     private String name;
     private String origin;
+    private Date dateImport;
     private int counts;
     private String describes;
     private boolean status;

@@ -17,6 +17,7 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,8 +113,10 @@ public class OptionsApi {
 
             // Xử lý response nếu response status code là 200 OK
             if (response.statusCode() == 200) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                options = objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Options.class));
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+                options = mapper.readValue(response.body(), mapper.getTypeFactory().constructCollectionType(List.class, Options.class));
             } else {
                 System.out.println("API getOptionsByProduct error: " + response.statusCode());
             }
@@ -124,5 +127,37 @@ public class OptionsApi {
         return options;
     }
 
+    public List<Options> getByDiscount(String id_discount) throws IOException, ClassNotFoundException {
+        List<Options> options = new ArrayList<>();
+        String token = localStorage.getTokenInLocal();
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            String url = ipAddress + "/getByDiscount/" + id_discount;
+
+            // Tạo request HTTP GET tới API
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .build();
+
+            // Gửi request và lấy response trả về
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Xử lý response nếu response status code là 200 OK
+            if (response.statusCode() == 200) {
+                ObjectMapper mapper = new ObjectMapper();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                mapper.setDateFormat(dateFormat);
+                options = mapper.readValue(response.body(), mapper.getTypeFactory().constructCollectionType(List.class, Options.class));
+            } else {
+                System.out.println("API getOptionsByProduct error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return options;
+    }
 
 }

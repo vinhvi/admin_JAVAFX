@@ -12,20 +12,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ListProductController implements Initializable {
@@ -45,6 +47,7 @@ public class ListProductController implements Initializable {
     public TableColumn<Product, Void> column_options;
     public TableColumn<Product, String> column_countOptions;
     public TableColumn<Product, String> column_evaluate;
+    public TableColumn<Product, String> column_date;
 
 
     @Override
@@ -117,7 +120,19 @@ public class ListProductController implements Initializable {
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
+        });
+        column_date.setCellValueFactory(column -> {
+            Date date = column.getValue().getDateImport();
+            SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            String formattedDate = "";
+            try {
+                Date date2 = inputFormat.parse(String.valueOf(date));
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                formattedDate = outputFormat.format(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return new SimpleStringProperty(formattedDate);
         });
 
         Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellCallback = new Callback<>() {
@@ -130,7 +145,7 @@ public class ListProductController implements Initializable {
                         inforImportOrder_btn.setOnAction(actionEvent -> {
                             Product productData = getTableView().getItems().get(getIndex());
                             System.out.println(productData);
-                            showInforProduct((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), productData);
+                            showInforProduct(productData);
                         });
                     }
 
@@ -151,15 +166,15 @@ public class ListProductController implements Initializable {
     }
 
 
-    private void showInforProduct(Stage stage, Product product) {
+    private void showInforProduct(Product product) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/UpdateProduct.fxml"));
         try {
             Parent root = loader.load();
             UpdateProductController controller = loader.getController();
             controller.setDataInforProduct(product);
             Stage dialog = new Stage();
-            dialog.initOwner(stage);
-            dialog.initModality(Modality.APPLICATION_MODAL);
+//            dialog.initOwner(stage);
+//            dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.setScene(new Scene(root));
             dialog.showAndWait();
             List<Product> productList = productApi.getListProduct();
