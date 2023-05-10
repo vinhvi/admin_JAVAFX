@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Product;
-import com.techsavvy.admin.entity.Specifications;
+import entity.Product;
+import entity.Specification;
 import org.springframework.http.HttpStatus;
 
 import java.io.BufferedReader;
@@ -126,7 +126,7 @@ public class ProductApi {
         return productList;
     }
 
-    public boolean createSpecifi(Specifications specifications) throws IOException, ClassNotFoundException {
+    public boolean createSpecifi(Specification specifications) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/createSpecification";
         String token = localStorage.getTokenInLocal();
         boolean isUpdate;
@@ -153,10 +153,10 @@ public class ProductApi {
         return isUpdate;
     }
 
-    public List<Specifications> getSpecifiByProduct(String productId) throws IOException, ClassNotFoundException {
+    public List<Specification> getSpecifiByProduct(String productId) throws IOException, ClassNotFoundException {
         String url = ipAddress + "/getSpecifiByProduct/" + productId;
         String token = localStorage.getTokenInLocal();
-        List<Specifications> specifications = new ArrayList<>();
+        List<Specification> specifications = new ArrayList<>();
         try {
             HttpClient client = HttpClient.newHttpClient();
 
@@ -173,7 +173,8 @@ public class ProductApi {
             // Xử lý response nếu response status code là 200 OK
             if (response.statusCode() == 200) {
                 ObjectMapper objectMapper = new ObjectMapper();
-                specifications = objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Specifications.class));
+                specifications = objectMapper.readValue(response.body(), objectMapper.getTypeFactory()
+                        .constructCollectionType(List.class, Specification.class));
             } else {
                 System.out.println("API getOptionsByProduct error: " + response.statusCode());
             }

@@ -3,7 +3,7 @@ package com.techsavvy.admin.Api;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Answer;
+import entity.Answer;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;

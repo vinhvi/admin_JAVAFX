@@ -1,7 +1,7 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.CustomerApi;
-import com.techsavvy.admin.entity.Customer;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

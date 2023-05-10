@@ -3,9 +3,9 @@ package com.techsavvy.admin.Controller;
 import com.techsavvy.admin.Api.EmployeeApi;
 import com.techsavvy.admin.Api.RoleApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.Address;
-import com.techsavvy.admin.entity.Employee;
-import com.techsavvy.admin.entity.Role;
+import entity.Address;
+import entity.Employee;
+import entity.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -17,7 +17,9 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class AddEmployeeController implements Initializable {
     private final RoleApi roleApi = new RoleApi();
@@ -108,7 +110,7 @@ public class AddEmployeeController implements Initializable {
         }
     }
 
-    public Employee getEmployee() throws IOException {
+    public Employee getEmployee() {
         Employee employee = new Employee();
         employee.setId(maNV_txt.getText());
         employee.setFirstName(firstName_txt.getText());

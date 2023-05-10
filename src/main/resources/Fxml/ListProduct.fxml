@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="900" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListProductController">
+<VBox prefHeight="800.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListProductController">
    <Label alignment="CENTER" prefHeight="44.0" prefWidth="320.0" text="DANH SÁCH SẢN PHẨM">
       <font>
          <Font name="System Bold" size="24.0" />
@@ -20,7 +20,7 @@
          <Insets left="500.0" top="10.0" />
       </VBox.margin>
    </Label>
-   <HBox alignment="CENTER" prefHeight="171.0" prefWidth="1240.0">
+   <HBox alignment="CENTER" prefHeight="114.0" prefWidth="1240.0">
       <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Tìm kiếm">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" size="16" />
@@ -38,7 +38,7 @@
          </font>
       </TextField>
    </HBox>
-   <TableView fx:id="table_list_product" prefHeight="638.0" prefWidth="1230.0">
+   <TableView fx:id="table_list_product" prefHeight="580.0" prefWidth="1230.0">
       <columns>
          <TableColumn fx:id="column_stt" prefWidth="85.0" text="STT" />
          <TableColumn fx:id="column_ma" prefWidth="149.0" text="Mã sản phẩm" />

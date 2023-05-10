@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.ShippingCompany;
+import entity.ShippingCompany;
 
 import java.io.IOException;
 import java.io.InputStream;

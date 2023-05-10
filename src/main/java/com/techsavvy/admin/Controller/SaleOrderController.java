@@ -1,8 +1,8 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.OrderApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.Order;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

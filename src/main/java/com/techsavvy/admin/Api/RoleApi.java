@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Role;
+import entity.Role;
 
 import java.io.BufferedReader;
 import java.io.IOException;

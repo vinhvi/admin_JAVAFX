@@ -3,7 +3,7 @@ package com.techsavvy.admin.Api;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Type;
+import entity.Type;
 
 import java.io.BufferedReader;
 import java.io.IOException;

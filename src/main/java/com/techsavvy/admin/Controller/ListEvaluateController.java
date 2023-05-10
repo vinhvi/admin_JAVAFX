@@ -2,8 +2,8 @@ package com.techsavvy.admin.Controller;
 
 import com.techsavvy.admin.Api.CustomerApi;
 import com.techsavvy.admin.Api.EvaluateApi;
-import com.techsavvy.admin.entity.Customer;
-import com.techsavvy.admin.entity.Evaluate;
+import entity.Customer;
+import entity.Evaluate;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

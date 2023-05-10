@@ -1,17 +1,14 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.EmployeeApi;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Employee;
-import com.techsavvy.admin.entity.Product;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-
 import javafx.scene.chart.LineChart;
-
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;

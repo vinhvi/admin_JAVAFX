@@ -12,11 +12,11 @@ module com.qtvsmart.admin.admin {
     requires jakarta.ws.rs;
     requires spring.core;
     requires java.net.http;
+    requires entity;
 
     opens com.techsavvy.admin to javafx.fxml;
-    opens com.techsavvy.admin.entity to com.google.gson;
 
-    exports com.techsavvy.admin.entity;
+
     exports com.techsavvy.admin;
     exports com.techsavvy.admin.Controller;
 

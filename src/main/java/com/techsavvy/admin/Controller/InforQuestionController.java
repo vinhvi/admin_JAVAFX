@@ -1,14 +1,11 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.AccountApi;
 import com.techsavvy.admin.Api.AnswerApi;
 import com.techsavvy.admin.Api.CustomerApi;
 import com.techsavvy.admin.Api.QuestionApi;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Account;
-import com.techsavvy.admin.entity.Answer;
-import com.techsavvy.admin.entity.Customer;
-import com.techsavvy.admin.entity.Question;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;

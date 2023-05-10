@@ -2,10 +2,10 @@ package com.techsavvy.admin.Controller;
 
 import com.techsavvy.admin.Api.CustomerApi;
 import com.techsavvy.admin.Api.RoleApi;
-import com.techsavvy.admin.entity.Account;
-import com.techsavvy.admin.entity.Address;
-import com.techsavvy.admin.entity.Customer;
-import com.techsavvy.admin.entity.Role;
+import entity.Account;
+import entity.Address;
+import entity.Customer;
+import entity.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;

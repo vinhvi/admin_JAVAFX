@@ -1,9 +1,8 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.SupplierApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.Address;
-import com.techsavvy.admin.entity.Supplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;

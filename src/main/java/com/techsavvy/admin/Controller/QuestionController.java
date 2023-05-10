@@ -2,8 +2,8 @@ package com.techsavvy.admin.Controller;
 
 import com.techsavvy.admin.Api.CustomerApi;
 import com.techsavvy.admin.Api.QuestionApi;
-import com.techsavvy.admin.entity.Customer;
-import com.techsavvy.admin.entity.Question;
+import entity.Customer;
+import entity.Question;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -70,15 +70,15 @@ public class QuestionController implements Initializable {
 
     private void getListQuestion() throws IOException, ClassNotFoundException {
         List<Question> questions = questionApi.getQuestionByReply();
-        if (!questions.isEmpty()) {
-            setTable_question(questions);
-        } else {
+        if (questions == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Thông báo");
             alert.setHeaderText("Chưa có câu hỏi nào !");
             alert.show();
         }
-
+        else {
+            setTable_question(questions);
+        }
     }
 
     private void setTable_question(List<Question> questionList) {

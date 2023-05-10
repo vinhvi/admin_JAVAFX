@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Order;
-import com.techsavvy.admin.entity.OrderDetail;
+import entity.Order;
+import entity.OrderDetail;
 import org.springframework.http.HttpStatus;
 
 import java.io.BufferedReader;

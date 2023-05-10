@@ -2,9 +2,9 @@ package com.techsavvy.admin.Controller;
 
 import com.techsavvy.admin.Api.AccountApi;
 import com.techsavvy.admin.Api.EmployeeApi;
-import com.techsavvy.admin.entity.Account;
-import com.techsavvy.admin.entity.Employee;
-import com.techsavvy.admin.entity.Role;
+import entity.Account;
+import entity.Employee;
+import entity.Role;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -14,9 +14,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,19 +34,20 @@ public class ListEmployeeController implements Initializable {
     public Button addEmployee_btn;
     public TableView<Employee> tableView;
     public TableColumn<Employee, String> roleColumn;
-    public TableColumn<Employee, Integer> sttColumn;
+
+    public TableColumn<Employee, Integer> column_stt;
     public TableColumn<Employee, String> nameEmployeeColumn;
     public TableColumn<Employee, String> sexColumn;
     public TableColumn<Employee, String> importDateColumn;
 
-    public String maNVSelected;
-    public Button infor_btn;
+    public TableColumn<Employee, Void> column_option;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
         try {
-            setRoleColumn();
+            setTableEmployee();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -58,21 +61,6 @@ public class ListEmployeeController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-
-        tableView.setOnMouseClicked(event -> {
-            Employee selectedEmployee = tableView.getSelectionModel().getSelectedItem();
-            if (selectedEmployee!=null){
-                maNVSelected = selectedEmployee.getId();
-            }
-        });
-
-        infor_btn.setOnAction(actionEvent -> {
-            try {
-                inforEmployee();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     private void onAddEmployee() throws IOException {
@@ -83,7 +71,11 @@ public class ListEmployeeController implements Initializable {
         stage.show();
     }
 
-    private void setRoleColumn() throws IOException, ClassNotFoundException {
+    private void getListEmployee(){
+
+    }
+
+    private void setTableEmployee() throws IOException, ClassNotFoundException {
         roleColumn.setCellValueFactory(cellData -> {
             try {
                 String chucVu = "";
@@ -102,10 +94,10 @@ public class ListEmployeeController implements Initializable {
 
         });
 
-        sttColumn.setCellValueFactory(column -> new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(column.getValue()) + 1));
+        column_stt.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(stt.getValue()) + 1));
 
         nameEmployeeColumn.setCellValueFactory(nameColumn -> {
-            String name = nameColumn.getValue().getFirstName() + nameColumn.getValue().getLastName();
+            String name = nameColumn.getValue().getFirstName() + " " + nameColumn.getValue().getLastName();
             return new SimpleStringProperty(name);
         });
 
@@ -133,7 +125,34 @@ public class ListEmployeeController implements Initializable {
             }
             return new SimpleStringProperty(formattedDate);
         });
-
+        Callback<TableColumn<Employee, Void>, TableCell<Employee, Void>> cellCallback = new Callback<>() {
+            @Override
+            public TableCell<Employee, Void> call(TableColumn<Employee, Void> employeeVoidTableColumn) {
+                return new TableCell<>() {
+                    private final Button inforEmployee_btn = new Button("Xem Thông Tin");
+                    {
+                        inforEmployee_btn.setOnAction(actionEvent -> {
+                            Employee data = getTableView().getItems().get(getIndex());
+                            try {
+                                inforEmployee(data.getId());
+                            } catch (IOException | ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(inforEmployee_btn);
+                        }
+                    }
+                };
+            }
+        };
+        column_option.setCellFactory(cellCallback);
         List<Employee> employeeList = new ArrayList<>();
         Account account;
         for (Employee employee : employeeApi.getListEmployee()) {
@@ -143,18 +162,16 @@ public class ListEmployeeController implements Initializable {
         }
         ObservableList<Employee> observableEmployeeList = FXCollections.observableArrayList(employeeList);
         tableView.setItems(observableEmployeeList);
-
     }
 
-    private void inforEmployee() throws IOException, ClassNotFoundException {
+    private void inforEmployee(String maNV) throws IOException, ClassNotFoundException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/InforEmployee.fxml"));
         Parent root = fxmlLoader.load();
         InforEmployeeController inforEmployeeController = fxmlLoader.getController();
-        inforEmployeeController.setInforEmployee(maNVSelected);
-        System.out.println(maNVSelected);
+        inforEmployeeController.setInforEmployee(maNV);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.showAndWait();
     }
 
 

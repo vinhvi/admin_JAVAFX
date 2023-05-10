@@ -1,17 +1,13 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.AccountApi;
 import com.techsavvy.admin.Api.EmployeeApi;
 import com.techsavvy.admin.Api.RoleApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.Account;
-import com.techsavvy.admin.entity.Address;
-import com.techsavvy.admin.entity.Employee;
-import com.techsavvy.admin.entity.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,7 +17,10 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 public class InforEmployeeController implements Initializable {
     private final EmployeeApi employeeApi = new EmployeeApi();

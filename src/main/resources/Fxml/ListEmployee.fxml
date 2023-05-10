@@ -24,19 +24,19 @@
                 <Insets left="500.0" top="20.0" />
             </VBox.margin>
         </Label>
-        <HBox prefHeight="80.0" prefWidth="1240.0">
+        <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1240.0">
             <VBox.margin>
-                <Insets top="50.0" />
+                <Insets left="10.0" right="10.0" top="50.0"/>
             </VBox.margin>
             <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="105.0" text="Tìm Kiếm">
                 <graphic>
-                    <FontAwesomeIconView glyphName="SEARCH" size="20" />
+                    <FontAwesomeIconView glyphName="SEARCH" size="20"/>
                 </graphic>
                 <font>
-                    <Font name="System Bold" size="13.0" />
+                    <Font name="System Bold" size="13.0"/>
                 </font>
                 <HBox.margin>
-                    <Insets left="50.0" top="20.0" />
+                    <Insets left="50.0"/>
                 </HBox.margin>
             </Button>
             <TextField alignment="CENTER" prefHeight="32.0" prefWidth="313.0" promptText="Nhập mã hoặc tên nhân viên cần tìm ...">
@@ -44,17 +44,9 @@
                     <Font name="System Bold" size="13.0" />
                 </font>
                 <HBox.margin>
-                    <Insets left="20.0" top="20.0" />
+                    <Insets left="20.0"/>
                 </HBox.margin>
             </TextField>
-            <Button fx:id="infor_btn" mnemonicParsing="false" prefHeight="31.0" prefWidth="195.0" text="Xem Thông Tin Nhân Viên">
-                <font>
-                    <Font name="System Bold" size="13.0" />
-                </font>
-                <HBox.margin>
-                    <Insets left="200.0" top="20.0" />
-                </HBox.margin>
-            </Button>
             <Button fx:id="addEmployee_btn" mnemonicParsing="false" prefHeight="32.0" prefWidth="164.0" text="Thêm Nhân Viên ">
                 <graphic>
                     <FontAwesomeIconView fill="#168d18" glyphName="PLUS_CIRCLE" selectionFill="#c3b8b8" size="20" />
@@ -63,20 +55,20 @@
                     <Font name="System Bold" size="13.0" />
                 </font>
                 <HBox.margin>
-                    <Insets left="120.0" top="20.0" />
+                    <Insets left="120.0"/>
                 </HBox.margin>
             </Button>
         </HBox>
-        <TableView fx:id="tableView" editable="true" prefHeight="628.0" prefWidth="1220.0">
+        <TableView fx:id="tableView" editable="true" prefHeight="546.0" prefWidth="1210.0">
             <columns>
-                <TableColumn fx:id="sttColumn" prefWidth="75.0" text="STT">
+                <TableColumn fx:id="column_stt" prefWidth="75.0" text="STT">
                     <cellValueFactory>
-                        <PropertyValueFactory property="stt" />
+                        <PropertyValueFactory property="stt"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="138.0" text="Mã Nhân Viên">
                     <cellValueFactory>
-                        <PropertyValueFactory property="id" />
+                        <PropertyValueFactory property="id"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="nameEmployeeColumn" prefWidth="167.0" text="Tên Nhân Viên">
@@ -84,25 +76,30 @@
                         <PropertyValueFactory property="name" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="roleColumn" prefWidth="184.0" text="Chức Vụ">
+                <TableColumn fx:id="roleColumn" prefWidth="147.0" text="Chức Vụ">
                     <cellValueFactory>
-                        <PropertyValueFactory property="nameRole" />
+                        <PropertyValueFactory property="nameRole"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="sexColumn" prefWidth="120.0" text="Giới Tính">
+                <TableColumn fx:id="sexColumn" prefWidth="129.0" text="Giới Tính">
                     <cellValueFactory>
-                        <PropertyValueFactory property="sex" />
+                        <PropertyValueFactory property="sex"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="176.0" text="Email">
+                <TableColumn prefWidth="149.0" text="Email">
                     <cellValueFactory>
-                        <PropertyValueFactory property="email" />
+                        <PropertyValueFactory property="email"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="importDateColumn" prefWidth="180.0" text="Ngày Vào Làm" />
-                <TableColumn prefWidth="176.0" text="Số Điện Thoại">
+                <TableColumn fx:id="importDateColumn" prefWidth="161.0" text="Ngày Vào Làm"/>
+                <TableColumn prefWidth="136.0" text="Số Điện Thoại">
                     <cellValueFactory>
-                        <PropertyValueFactory property="phone" />
+                        <PropertyValueFactory property="phone"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="column_option" prefWidth="111.0" text="Tùy Chọn">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="stt"/>
                     </cellValueFactory>
                 </TableColumn>
             </columns>

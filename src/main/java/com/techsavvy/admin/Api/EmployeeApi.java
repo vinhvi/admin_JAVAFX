@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.techsavvy.admin.Models.DateTypeAdapter;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Employee;
+import entity.Employee;
 import org.springframework.http.HttpStatus;
 
 import java.io.*;

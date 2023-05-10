@@ -3,7 +3,7 @@ package com.techsavvy.admin.Api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Image;
+import entity.Image;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;

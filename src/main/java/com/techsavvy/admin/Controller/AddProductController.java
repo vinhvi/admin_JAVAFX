@@ -1,10 +1,10 @@
 package com.techsavvy.admin.Controller;
 
+import entity.Options;
+import entity.Product;
+import entity.Type;
 import com.techsavvy.admin.Api.ProductApi;
 import com.techsavvy.admin.Api.TypeApi;
-import com.techsavvy.admin.entity.Options;
-import com.techsavvy.admin.entity.Product;
-import com.techsavvy.admin.entity.Type;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

@@ -1,11 +1,11 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.EvaluateApi;
 import com.techsavvy.admin.Api.ImageApi;
 import com.techsavvy.admin.Api.ProductApi;
 import com.techsavvy.admin.Api.TypeApi;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.*;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,19 +37,19 @@ public class UpdateProductController implements Initializable {
     private final ProductApi productApi = new ProductApi();
     private final ImageApi imageApi = new ImageApi();
     private final TypeApi typeApi = new TypeApi();
-    private final EvaluateApi evaluateApi =new EvaluateApi();
-    public TableColumn<com.techsavvy.admin.entity.Image, Integer> columStt_Image;
-    public TableColumn<com.techsavvy.admin.entity.Image, String> columnLink_image;
-    public TableColumn<com.techsavvy.admin.entity.Image, Void> columnOption_image;
+    private final EvaluateApi evaluateApi = new EvaluateApi();
+    public TableColumn<entity.Image, Integer> columStt_Image;
+    public TableColumn<entity.Image, String> columnLink_image;
+    public TableColumn<entity.Image, Void> columnOption_image;
     public Button listOptions_btn;
     public ProgressIndicator loading_upload_image;
     public Button btn_infor_moTa;
     public Button question_btn;
     public Button evaluate_btn;
     private File file;
-    private List<Specifications> specificationsList = new ArrayList<>();
-    private List<com.techsavvy.admin.entity.Image> imageList = new ArrayList<>();
-    private Specifications specifications;
+    private List<Specification> specificationsList = new ArrayList<>();
+    private List<entity.Image> imageList = new ArrayList<>();
+    private Specification specifications;
     public ImageView image_view = new ImageView();
     public TextField id_Product;
     public TextField nameProduct_txt;
@@ -61,22 +61,22 @@ public class UpdateProductController implements Initializable {
     public TextField count_txt;
     public TextField detailSpecifi_txt;
     public Button addSpecifi_btn;
-    public TableView<Specifications> table_specifi;
+    public TableView<Specification> table_specifi;
     public Button add_image_btn;
     public TextField nameSpecifi_txt;
-    public TableView<com.techsavvy.admin.entity.Image> table_list_image;
+    public TableView<entity.Image> table_list_image;
     public Button confirm_btn;
     public Button huy_btn;
-    public TableColumn<Specifications, Integer> columnSTT_specifi;
-    public TableColumn<Specifications, String> columnName_specifi;
-    public TableColumn<Specifications, String> columnDiscribes_specifi;
-    public TableColumn<Specifications, Void> columnOptions_specifi;
+    public TableColumn<Specification, Integer> columnSTT_specifi;
+    public TableColumn<Specification, String> columnName_specifi;
+    public TableColumn<Specification, String> columnDiscribes_specifi;
+    public TableColumn<Specification, Void> columnOptions_specifi;
     public Button updateSpec_btn;
     private Product product;
 
     private final AtomicInteger index = new AtomicInteger(0);
 
-    private Specifications specificationsInTable;
+    private Specification specificationsInTable;
 
 
     public Product getProduct() {
@@ -132,7 +132,7 @@ public class UpdateProductController implements Initializable {
     private void onClickTableImage() {
         table_list_image.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == 2) {
-                com.techsavvy.admin.entity.Image image = table_list_image.getSelectionModel().getSelectedItem();
+                entity.Image image = table_list_image.getSelectionModel().getSelectedItem();
                 Image link = new Image(image.getImageUrl());
                 image_view.setImage(link);
             }
@@ -183,13 +183,13 @@ public class UpdateProductController implements Initializable {
 
     private void addImage() throws IOException, ClassNotFoundException {
         if (file != null) {
-            Task<com.techsavvy.admin.entity.Image> uploadTask = new Task<>() {
+            Task<entity.Image> uploadTask = new Task<>() {
                 @Override
-                protected com.techsavvy.admin.entity.Image call() throws Exception {
+                protected entity.Image call() throws Exception {
                     // Hiển thị ProgressIndicator trong UI thread
                     Platform.runLater(() -> loading_upload_image.setVisible(true));
                     // Thực hiện upload hình ảnh trong background thread
-                    com.techsavvy.admin.entity.Image image = imageApi.uploadImage(file, id_Product.getText());
+                    entity.Image image = imageApi.uploadImage(file, id_Product.getText());
                     add_image_btn.setDisable(true);
                     return image;
                 }
@@ -201,10 +201,10 @@ public class UpdateProductController implements Initializable {
                     loading_upload_image.setVisible(false);
                     add_image_btn.setDisable(false);
                     // Thêm hình ảnh vào danh sách và cập nhật bảng
-                    com.techsavvy.admin.entity.Image image = getValue();
+                    entity.Image image = getValue();
                     if (image != null) {
                         imageList.add(image);
-                        ObservableList<com.techsavvy.admin.entity.Image> imageObservableList = FXCollections.observableArrayList(imageList);
+                        ObservableList<entity.Image> imageObservableList = FXCollections.observableArrayList(imageList);
                         table_list_image.setItems(imageObservableList);
                     }
                     file = null;
@@ -254,12 +254,12 @@ public class UpdateProductController implements Initializable {
     }
 
     private void onAddSpecifications() {
-        Specifications specifications = new Specifications();
+        Specification specifications = new Specification();
         specifications.setDescribes(detailSpecifi_txt.getText());
         specifications.setName(nameSpecifi_txt.getText());
         specifications.setProduct(product);
         specificationsList.add(specifications);
-        ObservableList<Specifications> observableList = FXCollections.observableArrayList(specificationsList);
+        ObservableList<Specification> observableList = FXCollections.observableArrayList(specificationsList);
         table_specifi.setItems(observableList);
         setDefaultSpecifi();
     }
@@ -271,13 +271,13 @@ public class UpdateProductController implements Initializable {
 
     private void updateSpecificationsInTable() {
         if (nameSpecifi_txt.getText() != null && detailSpecifi_txt != null) {
-            Specifications specifications1 = new Specifications();
+            Specification specifications1 = new Specification();
             specifications1.setId(specificationsInTable.getId());
             specifications1.setProduct(product);
             specifications1.setName(nameSpecifi_txt.getText());
             specifications1.setDescribes(detailSpecifi_txt.getText());
             specificationsList.set(index.get(), specifications1);
-            ObservableList<Specifications> observableList = FXCollections.observableArrayList(specificationsList);
+            ObservableList<Specification> observableList = FXCollections.observableArrayList(specificationsList);
             table_specifi.setItems(observableList);
             setDefaultSpecifi();
             System.out.println(specificationsList);
@@ -290,7 +290,7 @@ public class UpdateProductController implements Initializable {
     }
 
 
-    private void setTableSpecifications(List<Specifications> specificationsList) {
+    private void setTableSpecifications(List<Specification> specificationsList) {
         columnSTT_specifi.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_specifi.getItems().indexOf(stt.getValue()) + 1));
         columnName_specifi.setCellValueFactory(name -> {
             String nameSpecifi = name.getValue().getName();
@@ -301,23 +301,23 @@ public class UpdateProductController implements Initializable {
             return new SimpleStringProperty(describesSpecifi);
         });
 
-        Callback<TableColumn<Specifications, Void>, TableCell<Specifications, Void>> cellCallback = new Callback<>() {
+        Callback<TableColumn<Specification, Void>, TableCell<Specification, Void>> cellCallback = new Callback<>() {
             @Override
-            public TableCell<Specifications, Void> call(TableColumn<Specifications, Void> specificationsVoidTableColumn) {
+            public TableCell<Specification, Void> call(TableColumn<Specification, Void> specificationsVoidTableColumn) {
                 return new TableCell<>() {
                     private final Button deleteButton = new Button("Xóa");
 
                     {
                         deleteButton.setOnAction((ActionEvent event) -> {
-                            Specifications data = getTableView().getItems().get(getIndex());
+                            Specification data = getTableView().getItems().get(getIndex());
                             specificationsList.remove(data);
-                            List<Specifications> specificationsList1 = new ArrayList<>();
-                            for (Specifications specifications1 : specificationsList) {
+                            List<Specification> specificationsList1 = new ArrayList<>();
+                            for (Specification specifications1 : specificationsList) {
                                 specifications1.setId(specificationsList1.size() + 1);
                                 specificationsList1.add(specifications1);
                             }
                             System.out.println(specificationsList1);
-                            ObservableList<Specifications> newData = FXCollections.observableArrayList(specificationsList1);
+                            ObservableList<Specification> newData = FXCollections.observableArrayList(specificationsList1);
                             table_specifi.setItems(newData);
                         });
                     }
@@ -336,7 +336,7 @@ public class UpdateProductController implements Initializable {
         };
 
         columnOptions_specifi.setCellFactory(cellCallback);
-        ObservableList<Specifications> data = FXCollections.observableArrayList(specificationsList);
+        ObservableList<Specification> data = FXCollections.observableArrayList(specificationsList);
         table_specifi.setItems(data);
     }
 
@@ -357,7 +357,7 @@ public class UpdateProductController implements Initializable {
         combobox_status.setValue("Không kinh doanh");
     }
 
-    private void setTableImage(List<com.techsavvy.admin.entity.Image> imageList) {
+    private void setTableImage(List<entity.Image> imageList) {
         columStt_Image.setCellValueFactory(stt -> new ReadOnlyObjectWrapper<>(table_list_image.getItems().indexOf(stt.getValue()) + 1));
         columnLink_image.setCellValueFactory(link -> {
             String url = link.getValue().getImageUrl();
@@ -365,9 +365,9 @@ public class UpdateProductController implements Initializable {
                     SimpleStringProperty(url);
         });
 
-        Callback<TableColumn<com.techsavvy.admin.entity.Image, Void>, TableCell<com.techsavvy.admin.entity.Image, Void>> cellCallback = new Callback<>() {
+        Callback<TableColumn<entity.Image, Void>, TableCell<entity.Image, Void>> cellCallback = new Callback<>() {
             @Override
-            public TableCell<com.techsavvy.admin.entity.Image, Void> call(TableColumn<com.techsavvy.admin.entity.Image, Void> fileVoidTableColumn) {
+            public TableCell<entity.Image, Void> call(TableColumn<entity.Image, Void> fileVoidTableColumn) {
                 return new TableCell<>() {
                     private final Button deleteButton = new Button("Xóa");
 
@@ -379,13 +379,13 @@ public class UpdateProductController implements Initializable {
                             alert.setContentText("Bạn có chắc chắn muốn xóa ?");
                             Optional<ButtonType> result = alert.showAndWait();
                             if (result.isPresent() && result.get() == ButtonType.OK) {
-                                com.techsavvy.admin.entity.Image data = getTableView().getItems().get(getIndex());
+                                entity.Image data = getTableView().getItems().get(getIndex());
                                 try {
                                     Boolean isRemove = imageApi.deleteImage(data.getId());
                                     if (isRemove) {
                                         imageList.remove(data);
-                                        List<com.techsavvy.admin.entity.Image> images = new ArrayList<>(imageList);
-                                        ObservableList<com.techsavvy.admin.entity.Image> newData = FXCollections.observableArrayList(images);
+                                        List<entity.Image> images = new ArrayList<>(imageList);
+                                        ObservableList<entity.Image> newData = FXCollections.observableArrayList(images);
                                         table_list_image.setItems(newData);
                                     }
 
@@ -409,7 +409,7 @@ public class UpdateProductController implements Initializable {
             }
         };
         columnOption_image.setCellFactory(cellCallback);
-        ObservableList<com.techsavvy.admin.entity.Image> data = FXCollections.observableArrayList(imageList);
+        ObservableList<entity.Image> data = FXCollections.observableArrayList(imageList);
         table_list_image.setItems(data);
 
     }
@@ -433,7 +433,7 @@ public class UpdateProductController implements Initializable {
 
     private void updateSpecifi() throws IOException, ClassNotFoundException {
         if (updateProductForDatabase()) {
-            for (Specifications specifications1 : specificationsList) {
+            for (Specification specifications1 : specificationsList) {
                 if (productApi.createSpecifi(specifications1)) {
                     Stage stage = (Stage) huy_btn.getScene().getWindow();
                     Model.getInstance().getViewFactory().closeStage(stage);

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.Question;
+import entity.Question;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -55,13 +55,17 @@ public class QuestionApi {
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Authorization", token);
-        InputStream inputStream = connection.getInputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-        mapper.setDateFormat(dateFormat);
-        List<Question> questionList = mapper.readValue(inputStream, new TypeReference<>() {
-        });
-        inputStream.close();
-        return questionList;
+        int statusCode = connection.getResponseCode();
+        if (statusCode == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = connection.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+            mapper.setDateFormat(dateFormat);
+            List<Question> questionList = mapper.readValue(inputStream, new TypeReference<>() {
+            });
+            inputStream.close();
+            return questionList;
+        }
+        return null;
     }
 }

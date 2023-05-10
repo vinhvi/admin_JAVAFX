@@ -2,8 +2,8 @@ package com.techsavvy.admin.Controller;
 
 import com.techsavvy.admin.Api.DiscountApi;
 import com.techsavvy.admin.Api.OptionsApi;
-import com.techsavvy.admin.entity.Discount;
-import com.techsavvy.admin.entity.Options;
+import entity.Discount;
+import entity.Options;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

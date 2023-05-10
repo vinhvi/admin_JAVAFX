@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.techsavvy.admin.Models.GetIpAddress;
 import com.techsavvy.admin.Models.LocalStorage;
-import com.techsavvy.admin.entity.ImportOrder;
-import com.techsavvy.admin.entity.ImportOrderDetail;
+import entity.ImportOrder;
+import entity.ImportOrderDetail;
 
 import java.io.*;
 import java.net.HttpURLConnection;

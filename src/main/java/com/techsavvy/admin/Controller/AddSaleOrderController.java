@@ -1,9 +1,9 @@
 package com.techsavvy.admin.Controller;
 
+import entity.*;
 import com.techsavvy.admin.Api.*;
 import com.techsavvy.admin.Models.LocalStorage;
 import com.techsavvy.admin.Models.Model;
-import com.techsavvy.admin.entity.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

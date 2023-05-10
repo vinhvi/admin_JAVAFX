@@ -11,65 +11,62 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="900.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.techsavvy.admin.Controller.ListSupplierController">
+<VBox prefHeight="800.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techsavvy.admin.Controller.ListSupplierController">
     <Label alignment="CENTER" prefHeight="49.0" prefWidth="270.0" text="Danh Sách Nhà Cung Cấp">
         <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
         </font>
         <VBox.margin>
-            <Insets left="500.0" top="20.0"/>
+            <Insets left="500.0" top="20.0" />
         </VBox.margin>
     </Label>
-    <HBox prefHeight="80.0" prefWidth="1240.0">
+    <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1240.0">
         <VBox.margin>
-            <Insets top="50.0"/>
+            <Insets left="10.0" right="10.0" top="10.0" />
         </VBox.margin>
         <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="105.0" text="Tìm Kiếm">
             <graphic>
-                <FontAwesomeIconView glyphName="SEARCH" size="20"/>
+                <FontAwesomeIconView glyphName="SEARCH" size="20" />
             </graphic>
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
             <HBox.margin>
-                <Insets left="20.0" top="20.0"/>
+                <Insets left="20.0" />
             </HBox.margin>
         </Button>
-        <TextField alignment="CENTER" prefHeight="32.0" prefWidth="341.0"
-                   promptText="Nhập mã hoặc tên nhà cung cấp cần tìm ...">
+        <TextField alignment="CENTER" prefHeight="32.0" prefWidth="341.0" promptText="Nhập mã hoặc tên nhà cung cấp cần tìm ...">
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
             <HBox.margin>
-                <Insets left="20.0" top="20.0"/>
+                <Insets left="20.0" />
             </HBox.margin>
         </TextField>
-        <Button fx:id="addSupplier_btn" mnemonicParsing="false" prefHeight="32.0" prefWidth="164.0"
-                text="Thêm Nhà Cung Cấp">
+        <Button fx:id="addSupplier_btn" mnemonicParsing="false" prefHeight="32.0" prefWidth="164.0" text="Thêm Nhà Cung Cấp">
             <graphic>
-                <FontAwesomeIconView glyphName="PLUS" size="20"/>
+                <FontAwesomeIconView fill="#1bc952" glyphName="PLUS" size="20" />
             </graphic>
             <font>
-                <Font name="System Bold" size="13.0"/>
+                <Font name="System Bold" size="13.0" />
             </font>
             <HBox.margin>
-                <Insets left="450.0" top="20.0"/>
+                <Insets left="150.0" />
             </HBox.margin>
         </Button>
     </HBox>
-    <TableView fx:id="table_supplier" prefHeight="628.0" prefWidth="1220.0">
+    <TableView fx:id="table_supplier" prefHeight="600.0" prefWidth="1220.0">
         <columns>
-            <TableColumn fx:id="columSTT" prefWidth="75.0" text="STT"/>
-            <TableColumn fx:id="colum_Id" prefWidth="138.0" text="Mã Nhà Cung Cấp"/>
-            <TableColumn fx:id="column_Name" prefWidth="167.0" text="Tên Nhà Cung Cấp"/>
-            <TableColumn fx:id="column_Email" prefWidth="204.0" text="Email"/>
-            <TableColumn fx:id="column_phone" prefWidth="208.0" text="Số Điện Thoại"/>
-            <TableColumn fx:id="column_address" prefWidth="289.0" text="Địa Chỉ"/>
-            <TableColumn fx:id="column_options" prefWidth="138.0" text="Tùy Chọn"/>
+            <TableColumn fx:id="columSTT" prefWidth="75.0" text="STT" />
+            <TableColumn fx:id="colum_Id" prefWidth="138.0" text="Mã Nhà Cung Cấp" />
+            <TableColumn fx:id="column_Name" prefWidth="167.0" text="Tên Nhà Cung Cấp" />
+            <TableColumn fx:id="column_Email" prefWidth="204.0" text="Email" />
+            <TableColumn fx:id="column_phone" prefWidth="208.0" text="Số Điện Thoại" />
+            <TableColumn fx:id="column_address" prefWidth="289.0" text="Địa Chỉ" />
+            <TableColumn fx:id="column_options" prefWidth="138.0" text="Tùy Chọn" />
         </columns>
         <VBox.margin>
-            <Insets left="10.0" right="10.0" top="30.0"/>
+            <Insets left="10.0" right="10.0" top="10.0" />
         </VBox.margin>
     </TableView>
 
